@@ -8,55 +8,107 @@ namespace MovieLibrary.ConsoleHost
         {
             bool done = false;
 
-            char choice = GetInput();
-            if (choice == 'Q')
-                done = HandleQuit();
-            else if (choice == 'A')
-                AddMovie();
-            else
-                Console.WriteLine("Unknown option");
-            //TODO: handle additional stuff
-
-
+            do
+            {
+                char choice = GetInput();
+                if (choice == 'Q')
+                    done = HandleQuit();
+                else if (choice == 'A')
+                    AddMovie();
+                else if (choice == 'V')
+                    ViewMovie();
+                else if (choice == 'D')
+                    DeleteMovie();
+                else
+                    Console.WriteLine("Unknown option");
+            } while (!done);
         }
+
+        static string title;
+        static string description;
+        static int runLength;
+        static int releaseYear;
+        static double reviewRating;
+        static string rating;
+        static bool isClassic;
 
         static void AddMovie ()
         {
-            //Movie details
-            string title = ReadString("Enter the movie title: ", true);    
-            string description = ReadString("Enter the optional description: ", false);
+            //Movie details - ignoring warnings for now...
+            title = ReadString("Enter the movie title: ", true);    
+            description = ReadString("Enter the optional description: ", false);
 
-            int runLength = ReadInt32("Enter run length (in minutes): ", 0);         //>=0
-            int releaseYear = ReadInt32("Enter the release year (min 1900): ", 1900);       //1900+
+            runLength = ReadInt32("Enter run length (in minutes): ", 0);         //>=0
+            releaseYear = ReadInt32("Enter the release year (min 1900): ", 1900);       //1900+
 
-            double reviewRating;   //Optional, 0.0 to 5.0
-            string rating = ReadString("Enter the MPAA rating: ", false);
-            bool isClassic;        //Optional
+            //reviewRating;   //Optional, 0.0 to 5.0
+            rating = ReadString("Enter the MPAA rating: ", false);
+            isClassic = ReadBoolean("Is this a classic (Y/N)? ");        //Optional
+        }
+
+        static void ViewMovie ()
+        {
+            //TODO: What if they haven't added one yet?
+            //TODO: Formatting
+            Console.WriteLine(title);
+            Console.WriteLine(releaseYear);
+            Console.WriteLine(runLength);
+            Console.WriteLine(rating);
+            Console.WriteLine(isClassic);
+            Console.WriteLine(description);
+        }
+
+        static void DeleteMovie ()
+        {
+            if (!ReadBoolean("Are you sure (Y/N)? "))
+                return;
+
+            //TODO: Delete Movie
+            Console.WriteLine("Not implemented");
         }
 
         private static int ReadInt32 ( string message, int minimumValue ) 
         {
             Console.Write(message);
 
-            string input = Console.ReadLine();
+            do
+            {
+                //string input = Console.ReadLine();
+                var input = Console.ReadLine();
 
-            //TODO: Input validation
-            //int result = Int32.Parse(input); //Crashes program, not good for input
-            int result;
-            if(Int32.TryParse(input, out result))
-                return result;
+                //int result = Int32.Parse(input); //Crashes program, not good for input
+                //int result;
 
-            return -1;
+                //if(Int32.TryParse(input, out result))
+                //    if (result >= minimumValue)
+                if (Int32.TryParse(input, out var result) && result >= minimumValue)
+                    return result;
+
+                DisplayError("The value must be an integral value >= " + minimumValue);
+            } while (true);
+
+            //return -1;
         }
 
         private static string ReadString ( string message, bool required )
         {
             Console.Write(message);
 
-            //TODO: Input validation - required, normalize
-            string input = Console.ReadLine();
+            do
+            {
+                string input = Console.ReadLine();
 
-            return input;
+                //TODO: Input validation - required, normalize
+
+                return input;
+            } while (true);
+        }
+
+        static void DisplayError ( string message )
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(message);
+            Console.ResetColor();
         }
 
         private static bool HandleQuit ()
@@ -74,12 +126,14 @@ namespace MovieLibrary.ConsoleHost
         {
             Console.Write(message);
 
-            ConsoleKeyInfo input = Console.ReadKey();
-            if (input.Key == ConsoleKey.Y)
-                return true;
-
-            //TODO: Input validation
-            return false;
+            do
+            {
+                ConsoleKeyInfo input = Console.ReadKey(true);
+                if (input.Key == ConsoleKey.Y)
+                    return true;
+                else if (input.Key == ConsoleKey.N)
+                    return false;
+            } while (true);
         }
 
         static char GetInput ()
@@ -87,18 +141,28 @@ namespace MovieLibrary.ConsoleHost
             Console.WriteLine("Movie Library");
             Console.WriteLine("----------------");
 
-            Console.WriteLine("A) dd");
+            Console.WriteLine("A)dd");
+            Console.WriteLine("V)iew");
+            Console.WriteLine("D)elete");
             Console.WriteLine("Q)uit");
-            
-            //TODO: Input validation
-            //Get input
-            string input = Console.ReadLine();
-            if (input == "Q")
-                return 'Q';
-            else if (input == "A")
-                return 'A';
 
-            return default(char); //default
+            while (true)
+            {
+                //Get input
+                string input = Console.ReadLine();
+                if (input == "Q")
+                    return 'Q';
+                else if (input == "A")
+                    return 'A';
+                else if (input == "V")
+                    return 'V';
+                else if (input == "D")
+                    return 'D';
+
+                DisplayError("Invalid Input");
+            };
+
+            //return default(char); //default
         }
     }
 }
