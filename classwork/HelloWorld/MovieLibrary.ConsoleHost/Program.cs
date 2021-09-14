@@ -11,16 +11,29 @@ namespace MovieLibrary.ConsoleHost
             do
             {
                 char choice = GetInput();
-                if (choice == 'Q')
-                    done = HandleQuit();
-                else if (choice == 'A')
-                    AddMovie();
-                else if (choice == 'V')
-                    ViewMovie();
-                else if (choice == 'D')
-                    DeleteMovie();
-                else
-                    Console.WriteLine("Unknown option");
+                //if (choice == 'Q')
+                //    done = HandleQuit();
+                //else if (choice == 'A')
+                //    AddMovie();
+                //else if (choice == 'V')
+                //    ViewMovie();
+                //else if (choice == 'D')
+                //    DeleteMovie();
+                //else
+                //    Console.WriteLine("Unknown option");
+                
+                switch (choice)
+                {
+                    case 'Q':
+                    {
+                        done = HandleQuit();
+                        break;
+                    };
+                    case 'A': AddMovie(); break;
+                    case 'V': ViewMovie(); break;
+                    case 'D': DeleteMovie(); break;
+                    default: DisplayError("Unknown option"); break;
+                };
             } while (!done);
         }
 
@@ -150,14 +163,35 @@ namespace MovieLibrary.ConsoleHost
             {
                 //Get input
                 string input = Console.ReadLine();
-                if (input == "Q")
-                    return 'Q';
-                else if (input == "A")
-                    return 'A';
-                else if (input == "V")
-                    return 'V';
-                else if (input == "D")
-                    return 'D';
+                //if (input == "Q")
+                //    return 'Q';
+                //else if (input == "A")
+                //    return 'A';
+                //else if (input == "V")
+                //    return 'V';
+                //else if (input == "D")
+                //    return 'D';
+                switch (input)
+                {
+                    //No fallthrough
+                    //Must end with break
+                    //case "B": input = "10"; break;
+                    //case "c":
+                    //case "C": return 'B';
+
+                    case "q":
+                    case "Q": return 'Q';
+
+                    case "a":
+                    case "A": return 'A';
+
+                    case "v":
+                    case "V": return 'V';
+
+                    case "d":
+                    case "D": return 'D';
+                    //default:;
+                };
 
                 DisplayError("Invalid Input");
             };
