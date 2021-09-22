@@ -11,6 +11,43 @@ namespace JonaDaniel.AdventureGame.ConsoleHost
         static void Main(string[] args)
         {
             DisplayIntroduction();
+
+            do
+            {
+                string command = GetInput();
+
+                switch(command)
+                {
+                    case "look": SearchArea(); break;
+                    case "move":
+                    case "movenorth": MoveNorth(); break;
+                    case "movesouth": MoveSouth(); break;
+                    case "moveeast": MoveEast(); break;
+                    case "movewest": MoveWest(); break;
+                    default: DisplayError("Unknown option"); break;
+                };
+            } while (true);
+        }
+        static void SearchArea()
+        {
+            //TODO: Later
+            Console.WriteLine("You search");
+        }
+        static void MoveNorth()
+        {
+            Console.WriteLine("Move North");
+        }
+        static void MoveSouth ()
+        {
+            Console.WriteLine("Move South");
+        }
+        static void MoveEast ()
+        {
+            Console.WriteLine("Move East");
+        }
+        static void MoveWest ()
+        {
+            Console.WriteLine("Move West");
         }
         static void DisplayIntroduction()
         {
@@ -25,9 +62,37 @@ namespace JonaDaniel.AdventureGame.ConsoleHost
             Console.WriteLine("Where Sentence");
             Console.WriteLine("What next Sentence");
 
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("What do you want to do?");
+            //Console.ForegroundColor = ConsoleColor.Green;
+            //Console.WriteLine("What do you want to do?");
+            //Console.ResetColor();
+        }
+        static void DisplayError( string message )
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(message);
             Console.ResetColor();
+        }
+        static string GetInput()
+        {            
+            while (true)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("What do you want to do?");
+                Console.ResetColor();
+                string input = Console.ReadLine().Trim();
+
+                switch (input.ToUpper())
+                {
+                    case "MOVE": return "move";
+                    case "MOVENORTH": return "movenorth";
+                    case "MOVESOUTH": return "movesouth";
+                    case "MOVEEAST": return "moveeast";
+                    case "MOVEWEST": return "movewest";
+                    case "LOOK": return "look";
+                };
+
+                DisplayError("I don't know what that means");
+            }
         }
     }
 }
