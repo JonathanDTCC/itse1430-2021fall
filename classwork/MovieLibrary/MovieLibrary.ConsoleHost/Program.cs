@@ -1,37 +1,27 @@
 ﻿// ITSE 1430
 // Movie Library
-
 using System;
 
 namespace MovieLibrary.ConsoleHost
 {
+    //Main program
     class Program
     {
-        static void Main ( string[] args )
+        //Entry point function
+        static void Main(string[] args)
         {
             bool done = false;
 
             do
             {
                 char choice = GetInput();
-                //if (choice == 'Q')
-                //    done = HandleQuit();
-                //else if (choice == 'A')
-                //    AddMovie();
-                //else if (choice == 'V')
-                //    ViewMovie();
-                //else if (choice == 'D')
-                //    DeleteMovie();
-                //else
-                //    Console.WriteLine("Unknown option");
-                
                 switch (choice)
                 {
                     case 'Q':
-                    {
-                        done = HandleQuit();
-                        break;
-                    };
+                        {
+                            done = HandleQuit();
+                            break;
+                        };
                     case 'A': AddMovie(); break;
                     case 'V': ViewMovie(); break;
                     case 'D': DeleteMovie(); break;
@@ -40,71 +30,133 @@ namespace MovieLibrary.ConsoleHost
             } while (!done);
         }
 
-        static Movie movie = new Movie();
+        //Using null to represent no movie yet
+        static Movie movie; // = new Movie();
 
-        static void AddMovie ()
+        /// <summary>Deletes the movie, if any.</summary>
+        private static void DeleteMovie()
         {
-            //Movie details - ignoring warnings for now...
-            movie.title = ReadString("Enter the movie title: ", true);    
-            movie.description = ReadString("Enter the optional description: ", false);
+            if (movie == null)
+                return;
 
-            movie.runLength = ReadInt32("Enter run length (in minutes): ", 0);         //>=0
-            movie.releaseYear = ReadInt32("Enter the release year (min 1900): ", 1900);       //1900+
+            //var newMovie = movie.Copy();
 
-            //reviewRating;   //Optional, 0.0 to 5.0
-            movie.rating = ReadString("Enter the MPAA rating: ", false);
-            movie.isClassic = ReadBoolean("Is this a classic (Y/N)? ");        //Optional
+            //Confirm
+            if (!ReadBoolean("Are you sure (Y/N)? "))
+                return;
+
+            //TODO: Delete movie
+            movie = null;
         }
 
-        static void ViewMovie ()
+        /// <summary>Adds a movie.</summary>
+        static void AddMovie()
         {
+            //Store in a temp variable until validated
+            var newMovie = new Movie();
 
+            do
+            {
+                // newMovie.set_Title(...)
+                newMovie.Title = ReadString("Enter the movie title: ", false);
+                newMovie.Description = ReadString("Enter the optional description: ", false);
+
+                newMovie.RunLength = ReadInt32("Enter run length (in minutes): ", 0); // >= 0
+                newMovie.ReleaseYear = ReadInt32("Enter the release year (min 1900): ", Movie.MinimumReleaseYear); //1900+
+
+                //double reviewRating;  //Optional, 0.0 to 5.0
+                newMovie.Rating = ReadString("Enter the MPAA rating: ", false); //MPAA (not enforced)
+                newMovie.IsClassic = ReadBoolean("Is this a classic (Y/N)? ");       //Optional
+
+                //Validate
+                var error = newMovie.Validate();
+                if (String.IsNullOrEmpty(error))
+                {
+                    //TODO: Save movie
+                    movie = newMovie;
+                    return;
+                };
+
+                DisplayError(error);
+            } while (true);
+        }
+
+        /// <summary>Displays the entered movie.</summary>
+        static void ViewMovie()
+        {
             //What if they haven't added one yet?
-            if (String.IsNullOrEmpty(movie.title)) {
+            //if (String.IsNullOrEmpty(movie.title))
+            if (movie == null)
+            {
                 Console.WriteLine("No movie available");
                 return;
             };
 
-            Console.WriteLine($"{movie.title} ({movie.releaseYear})");
-            Console.WriteLine($"Runtime: {movie.runLength} mins");
-            Console.WriteLine($"MPAA Rating {movie.rating}");
-            Console.WriteLine($"Classic? {movie.isClassic}");
-            Console.WriteLine(movie.description);
+            //movie.get_Title()
+            Console.WriteLine($"{movie.Title} ({movie.ReleaseYear})");
+            Console.WriteLine($"Runtime: {movie.RunLength} mins");
+            Console.WriteLine($"MPAA Rating {movie.Rating}");
+            Console.WriteLine($"Classic? {movie.IsClassic}");
+            Console.WriteLine(movie.Description);
+
+            if (movie.AgeInYears >= 25)
+                Console.WriteLine($"{movie.AgeInYears}th Anniversary");
+            //movie.AgeInYears = 10;
         }
 
-        static void DeleteMovie ()
+        /// <summary>Handles quit logic.</summary>
+        /// <returns>true to quit the program.</returns>
+        private static bool HandleQuit()
         {
-            if (!ReadBoolean("Are you sure (Y/N)? "))
-                return;
+            //Display a confirmation
+            if (ReadBoolean("Are you sure you want to quit (Y/N)? "))
+                return true;
 
-            //Delete Movie
-            movie.title = null;
+            return false;
         }
 
-        private static int ReadInt32 ( string message, int minimumValue ) 
+        /// <summary>Reads a boolean value as Y/N.</summary>
+        /// <param name="message">The message to show.</param>
+        /// <returns>The user input.</returns>
+        private static bool ReadBoolean(string message)
         {
             Console.Write(message);
 
             do
             {
-                //string input = Console.ReadLine();
+                ConsoleKeyInfo input = Console.ReadKey(true);
+                if (input.Key == ConsoleKey.Y)
+                    return true;
+                else if (input.Key == ConsoleKey.N)
+                    return false;
+            } while (true);
+        }
+
+        /// <summary>Reads an Int32 from the console.</summary>
+        /// <param name="message">The message to display.</param>
+        /// <param name="minimumValue">The minimum value allowed.</param>
+        /// <returns>The integrval value that was entered.</returns>
+        static int ReadInt32(string message, int minimumValue)
+        {
+            Console.Write(message);
+
+            //Validate input
+            do
+            {
                 var input = Console.ReadLine();
 
-                //int result = Int32.Parse(input); //Crashes program, not good for input
-                //int result;
-
-                //if(Int32.TryParse(input, out result))
-                //    if (result >= minimumValue)
                 if (Int32.TryParse(input, out var result) && result >= minimumValue)
                     return result;
 
                 DisplayError("The value must be an integral value >= " + minimumValue);
             } while (true);
-
-            //return -1;
         }
 
-        private static string ReadString ( string message, bool required )
+        /// <summary>Reads a string from the console.</summary>
+        /// <param name="message">The message to show.</param>
+        /// <param name="required">true if the value is required.</param>
+        /// <returns>The user input.</returns>
+        static string ReadString(string message, bool required)
         {
             Console.Write(message);
 
@@ -120,74 +172,45 @@ namespace MovieLibrary.ConsoleHost
             } while (true);
         }
 
-        static void DisplayError ( string message )
+        /// <summary>Displays an error message.</summary>
+        /// <param name="message">The message to show.</param>
+        static void DisplayError(string message)
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(message);
             Console.ResetColor();
         }
 
-        private static bool HandleQuit ()
-        {
-            //return ReadBoolean("Are you sure you want to quit (Y/N)?");
-
-            //Display a confirmation
-            if (ReadBoolean("Are you sure you want to quit (Y/N)?"))
-                return true;
-
-            return false;
-        }
-
-        private static bool ReadBoolean ( string message )
-        {
-            Console.Write(message);
-
-            do
-            {
-                ConsoleKeyInfo input = Console.ReadKey(true);
-                if (input.Key == ConsoleKey.Y)
-                    return true;
-                else if (input.Key == ConsoleKey.N)
-                    return false;
-            } while (true);
-        }
-
-        static char GetInput ()
+        /// <summary>Gets user input for menu.</summary>
+        /// <returns>The selected option.</returns>
+        static char GetInput()
         {
             Console.WriteLine("Movie Library");
-            //Console.WriteLine("----------------");
             Console.WriteLine("".PadLeft(15, '-'));
 
-            Console.WriteLine("A)dd");
-            Console.WriteLine("V)iew");
-            Console.WriteLine("D)elete");
-            Console.WriteLine("Q)uit");
+            Console.WriteLine("A) dd");
+            Console.WriteLine("V) iew");
+            Console.WriteLine("D) elete");
+            Console.WriteLine("Q) uit");
 
             while (true)
             {
-                //Get input
+                //Get input 
                 string input = Console.ReadLine().Trim();
-                //if (input == "Q")
-                //    return 'Q';
-                //else if (input == "A")
-                //    return 'A';
-                //else if (input == "V")
-                //    return 'V';
-                //else if (input == "D")
-                //    return 'D';
-
-                // Case insensitive
                 switch (input.ToUpper())
                 {
-                    //No fallthrough
-                    //Must end with break
-                    //case "B": input = "10"; break;
-                    //case "c":
-                    //case "C": return 'B';
-
-                    //case "q":
+                    case "C": return 'B';
                     case "Q": return 'Q';
+                    case "A": return 'A';
+                    case "V": return 'V';
+                    case "D": return 'D';
+                };
 
+                DisplayError("Invalid input");
+            };
+        }
+    }
+}
                     //case "a":
                     case "A": return 'A';
 
