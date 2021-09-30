@@ -8,7 +8,7 @@ namespace MovieLibrary.ConsoleHost
     class Program
     {
         //Entry point function
-        static void Main(string[] args)
+        static void Main ( string[] args )
         {
             bool done = false;
 
@@ -18,10 +18,10 @@ namespace MovieLibrary.ConsoleHost
                 switch (choice)
                 {
                     case 'Q':
-                        {
-                            done = HandleQuit();
-                            break;
-                        };
+                    {
+                        done = HandleQuit();
+                        break;
+                    };
                     case 'A': AddMovie(); break;
                     case 'V': ViewMovie(); break;
                     case 'D': DeleteMovie(); break;
@@ -34,7 +34,7 @@ namespace MovieLibrary.ConsoleHost
         static Movie movie; // = new Movie();
 
         /// <summary>Deletes the movie, if any.</summary>
-        private static void DeleteMovie()
+        private static void DeleteMovie ()
         {
             if (movie == null)
                 return;
@@ -50,7 +50,7 @@ namespace MovieLibrary.ConsoleHost
         }
 
         /// <summary>Adds a movie.</summary>
-        static void AddMovie()
+        static void AddMovie ()
         {
             //Store in a temp variable until validated
             var newMovie = new Movie();
@@ -82,7 +82,7 @@ namespace MovieLibrary.ConsoleHost
         }
 
         /// <summary>Displays the entered movie.</summary>
-        static void ViewMovie()
+        static void ViewMovie ()
         {
             //What if they haven't added one yet?
             //if (String.IsNullOrEmpty(movie.title))
@@ -106,7 +106,7 @@ namespace MovieLibrary.ConsoleHost
 
         /// <summary>Handles quit logic.</summary>
         /// <returns>true to quit the program.</returns>
-        private static bool HandleQuit()
+        private static bool HandleQuit ()
         {
             //Display a confirmation
             if (ReadBoolean("Are you sure you want to quit (Y/N)? "))
@@ -118,7 +118,7 @@ namespace MovieLibrary.ConsoleHost
         /// <summary>Reads a boolean value as Y/N.</summary>
         /// <param name="message">The message to show.</param>
         /// <returns>The user input.</returns>
-        private static bool ReadBoolean(string message)
+        private static bool ReadBoolean ( string message )
         {
             Console.Write(message);
 
@@ -136,7 +136,7 @@ namespace MovieLibrary.ConsoleHost
         /// <param name="message">The message to display.</param>
         /// <param name="minimumValue">The minimum value allowed.</param>
         /// <returns>The integrval value that was entered.</returns>
-        static int ReadInt32(string message, int minimumValue)
+        static int ReadInt32 ( string message, int minimumValue )
         {
             Console.Write(message);
 
@@ -156,7 +156,7 @@ namespace MovieLibrary.ConsoleHost
         /// <param name="message">The message to show.</param>
         /// <param name="required">true if the value is required.</param>
         /// <returns>The user input.</returns>
-        static string ReadString(string message, bool required)
+        static string ReadString ( string message, bool required )
         {
             Console.Write(message);
 
@@ -174,7 +174,7 @@ namespace MovieLibrary.ConsoleHost
 
         /// <summary>Displays an error message.</summary>
         /// <param name="message">The message to show.</param>
-        static void DisplayError(string message)
+        static void DisplayError ( string message )
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(message);
@@ -183,7 +183,7 @@ namespace MovieLibrary.ConsoleHost
 
         /// <summary>Gets user input for menu.</summary>
         /// <returns>The selected option.</returns>
-        static char GetInput()
+        static char GetInput ()
         {
             Console.WriteLine("Movie Library");
             Console.WriteLine("".PadLeft(15, '-'));
@@ -209,23 +209,69 @@ namespace MovieLibrary.ConsoleHost
                 DisplayError("Invalid input");
             };
         }
-    }
-}
-                    //case "a":
-                    case "A": return 'A';
+        static void DemoObjects ()
+        {
+            object someValue = 10;
+            someValue = "Hello";
 
-                    //case "v":
-                    case "V": return 'V';
+            Print(10);
+            Print("Hello");
+            Print(45.6);
+            //someValue.Equals(10);
+        }
+        static void Print ( object value )
+        {
+            //Console.WriteLine(value);
 
-                    //case "d":
-                    case "D": return 'D';
-                    //default:;
-                };
+            //Type checking
+            // is-operator ::= E is T (returns bool)
+            // as-operator ::= E as T (returns T or null), does not work with primitives
+            // pattern-matching ::= E is T id = (returns E as T if valid or false otherwise)
 
-                DisplayError("Invalid Input");
+            //Type casting
+            // c-style ::= (T) E blows up at runtime if wrong, only use with primitives
+
+            if (value is int)
+            {
+                Console.WriteLine((int)value);
+                return;
             };
 
-            //return default(char); //default
+            string str = value as string;
+            if(str != null)
+            {
+                Console.WriteLine(str);
+                return;
+            };
+
+            //Best choice
+            if (value is double doubleValue)
+            {
+                Console.WriteLine(doubleValue);
+                return;
+            };
+
+            //int x;
+
+            //if (x == null)
+
+            //Value types follow value assignment (copy)
+            int x = 10;
+            int y = x;
+            x = 20;
+            Console.WriteLine(y); //10
+
+            //Value types follow value semantics
+            var equal = x == y;
+
+            //Reference types follow reference assignment
+            Movie m1 = new Movie();
+            Movie m2 = m1;
+            m1.Title = "Jaws";
+            Console.WriteLine(m2.Title); //Jaws
+
+            //Ref types follow reference semantics
+            equal = m1 == m2;  //Object.Equals
         }
     }
 }

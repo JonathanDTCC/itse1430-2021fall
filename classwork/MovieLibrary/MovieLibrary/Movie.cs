@@ -22,9 +22,14 @@ namespace MovieLibrary
         //   Setter has a single parameter called `value` of property type
         public string Title
         {
+            //null coalescing ::= E ?? E (returns first non-null expression)
+            //null condiitional ::= E ?. M (returns M?) changes the type of the expression
+
             //Read: T get_Title ()
             get {
-                return (_title != null) ? _title : "";
+                return _title ?? "";
+
+                //return (_title != null) ? _title : "";
                 //if (_title == null)
                 //    return "";
 
@@ -34,7 +39,11 @@ namespace MovieLibrary
             //Write void set_Title ( string value ) 
             set {
                 //_title = value;
-                _title = (value != null) ? value.Trim() : null;
+                //_title = (value != null) ? value.Trim() : null;
+                _title = value?.Trim();
+
+                //Movie m;
+                //int id = m?.Id ?? 0; //int?
             }
         }
 
