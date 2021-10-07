@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieLibrary.ConsoleHost", "MovieLibrary.ConsoleHost\MovieLibrary.ConsoleHost.csproj", "{ADE1AA5A-FF44-4FFA-8434-849ACA971779}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieLibrary", "MovieLibrary\MovieLibrary.csproj", "{A6F55C4E-C550-408A-B6E7-98F54F2C0639}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InheritanceDemo", "InheritanceDemo\InheritanceDemo.csproj", "{5F18E673-BBD0-4218-9A95-092E2A7EB1F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieLibrary.WinHost", "MovieLibrary.WinHost\MovieLibrary.WinHost.csproj", "{8E89183F-157A-47A1-9E0B-BC0A9FA03BD8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,18 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{ADE1AA5A-FF44-4FFA-8434-849ACA971779}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ADE1AA5A-FF44-4FFA-8434-849ACA971779}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ADE1AA5A-FF44-4FFA-8434-849ACA971779}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ADE1AA5A-FF44-4FFA-8434-849ACA971779}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A6F55C4E-C550-408A-B6E7-98F54F2C0639}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A6F55C4E-C550-408A-B6E7-98F54F2C0639}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6F55C4E-C550-408A-B6E7-98F54F2C0639}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6F55C4E-C550-408A-B6E7-98F54F2C0639}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5F18E673-BBD0-4218-9A95-092E2A7EB1F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5F18E673-BBD0-4218-9A95-092E2A7EB1F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5F18E673-BBD0-4218-9A95-092E2A7EB1F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5F18E673-BBD0-4218-9A95-092E2A7EB1F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E89183F-157A-47A1-9E0B-BC0A9FA03BD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E89183F-157A-47A1-9E0B-BC0A9FA03BD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E89183F-157A-47A1-9E0B-BC0A9FA03BD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E89183F-157A-47A1-9E0B-BC0A9FA03BD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
