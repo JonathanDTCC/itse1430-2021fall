@@ -173,6 +173,11 @@ namespace MovieLibrary
             return movie;
         }
 
+        public override string ToString ()
+        {
+            return $"{Title} ({ReleaseYear})";
+        }
+
         /// <summary>Validates the object.</summary>
         /// <returns>The error, if any.</returns>
         public string Validate ( /* Movie this */ )

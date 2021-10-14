@@ -46,6 +46,7 @@ namespace MovieLibrary.WinHost
             // 
             // _btnSave
             // 
+            this._btnSave.DialogResult = System.Windows.Forms.DialogResult.OK;
             this._btnSave.Location = new System.Drawing.Point(581, 387);
             this._btnSave.Name = "_btnSave";
             this._btnSave.Size = new System.Drawing.Size(75, 23);
@@ -56,6 +57,7 @@ namespace MovieLibrary.WinHost
             // 
             // _btnCancel
             // 
+            this._btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this._btnCancel.Location = new System.Drawing.Point(662, 387);
             this._btnCancel.Name = "_btnCancel";
             this._btnCancel.Size = new System.Drawing.Size(75, 23);
@@ -120,6 +122,7 @@ namespace MovieLibrary.WinHost
             // 
             // _cbRating
             // 
+            this._cbRating.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this._cbRating.FormattingEnabled = true;
             this._cbRating.Items.AddRange(new object[] {
             "G",
