@@ -8,7 +8,7 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main ( string[] args )
         {
             DisplayIntroduction();
 
@@ -30,27 +30,27 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
             } while (!done);
         }
         #region Character Methods
-        static void CreateCharacter()
+        static void CreateCharacter ()
         {
             Console.WriteLine("Create Character");
             //TODO: Creation Later Story
         }
 
-        static void ViewCharacter()
+        static void ViewCharacter ()
         {
             Console.WriteLine("View Character");
             //TODO: View Character
         }
 
-        static void EditCharacter()
+        static void EditCharacter ()
         {
             Console.WriteLine("Edit Character");
             //TODO: Edit Character
             //TODO: Confirmation
             //CreateCharacter();
         }
-        
-        static void DeleteCharacter()
+
+        static void DeleteCharacter ()
         {
             Console.WriteLine("Delete Character");
             //TODO: Delete character
@@ -58,14 +58,14 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
         }
         #endregion
         #region Input Methods
-        static char GetInput()
+        static char GetInput ()
         {
             while (true)
             {
                 DisplayMenu();
                 string input = Console.ReadLine().Trim();
 
-                switch(input.ToUpper())
+                switch (input.ToUpper())
                 {
                     case "C": return 'C';
                     case "V": return 'V';
@@ -77,7 +77,7 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
                 DisplayError("Invalid Input");
             }
         }
-        static bool ReadBoolean(string message)
+        static bool ReadBoolean ( string message )
         {
             Console.WriteLine(message);
 
@@ -92,7 +92,7 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
         }
         #endregion
         #region Display Methods
-        static void DisplayIntroduction()
+        static void DisplayIntroduction ()
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Jonathan Daniel");
@@ -101,7 +101,7 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
 
             DisplayMenu();
         }
-        static void DisplayMenu()
+        static void DisplayMenu ()
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("ITSE 1430 Character Creator Fall 2021");
@@ -116,7 +116,7 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
             Console.WriteLine("Q)uit");
         }
 
-        static void DisplayError(string message)
+        static void DisplayError ( string message )
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(message);

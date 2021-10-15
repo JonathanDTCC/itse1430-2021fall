@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JonaDaniel.CharacterCreator.ConsoleHost", "JonaDaniel.CharacterCreator.ConsoleHost\JonaDaniel.CharacterCreator.ConsoleHost.csproj", "{A742A3A1-12C5-4812-8E43-119F78296822}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JonaDaniel.CharacterCreator", "JonaDaniel.CharacterCreator\JonaDaniel.CharacterCreator.csproj", "{21165A52-0D61-4E31-902A-3B3510944D23}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{A742A3A1-12C5-4812-8E43-119F78296822}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A742A3A1-12C5-4812-8E43-119F78296822}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A742A3A1-12C5-4812-8E43-119F78296822}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21165A52-0D61-4E31-902A-3B3510944D23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21165A52-0D61-4E31-902A-3B3510944D23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21165A52-0D61-4E31-902A-3B3510944D23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21165A52-0D61-4E31-902A-3B3510944D23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
