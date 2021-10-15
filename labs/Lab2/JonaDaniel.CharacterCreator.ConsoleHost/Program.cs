@@ -64,8 +64,32 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
 
         static void ViewCharacter ()
         {
-            Console.WriteLine("View Character");
-            //TODO: View Character
+            if(character == null)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("You need to create a character before you can view it");
+                Console.ResetColor();
+                return;
+            }
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Character:");
+            Console.ResetColor();
+
+            Console.WriteLine($"Name: {character.Name}");
+            Console.WriteLine($"Profession: {character.Profession}");
+            Console.WriteLine($"Race: {character.Race}");
+            Console.WriteLine(character.Biography);
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Attributes:");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine($"Strength: [{character.Strength}]");
+            Console.WriteLine($"Intelligence: [{character.Intelligence}]");
+            Console.WriteLine($"Agility: [{character.Agility}]");
+            Console.WriteLine($"Constitution: [{character.Constitution}]");
+            Console.WriteLine($"Charisma: [{character.Charisma}]");
+            Console.ResetColor();
         }
 
         static void EditCharacter ()
@@ -185,6 +209,7 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
         }
         static void DisplayMenu ()
         {
+            Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("ITSE 1430 Character Creator Fall 2021");
             Console.WriteLine("".PadRight(15, '-'));
