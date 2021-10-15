@@ -64,7 +64,7 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
 
         static void ViewCharacter ()
         {
-            if(character == null)
+            if (character == null)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("You need to create a character before you can view it");
@@ -94,10 +94,57 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
 
         static void EditCharacter ()
         {
-            Console.WriteLine("Edit Character");
-            //TODO: Edit Character
-            //TODO: Confirmation
-            //CreateCharacter();
+            if (character == null)
+            {
+                if (ReadBoolean("No defined character exists, would you like to create a new one(Y/N)?"))
+                {
+                    CreateCharacter();
+                    return;
+                }
+                return;
+            }
+
+            Console.WriteLine("This is your current character");
+            ViewCharacter();
+
+            var newCharacter = new Character(character.Name, character.Profession, character.Race);
+
+            do
+            {
+                newCharacter.Name = ReadBoolean($"Characters name is currently |{character.Name}| do you want to change it? (Y/N)") ? 
+                                    ReadString("Enter your characters name: ", true) : character.Name;
+
+                newCharacter.Profession = ReadBoolean($"Characters profession is currently |{character.Profession}| do you want to change it? (Y/N)") ? 
+                                        ChooseFromList("Profession", Character.ValidProfessions, true, true) : character.Profession;
+                newCharacter.Race = ReadBoolean($"Characters race is currently |{character.Race}| do you want to change it? (Y/N)") ? 
+                                    ChooseFromList("Race", Character.ValidRaces, true, true) : character.Race;
+
+                newCharacter.Biography = (character.Biography == "") ? 
+                                        ReadBoolean("Would you like to add a Biography entry to your character? (Y/N)") ? 
+                                                    ReadString("Enter an optional biography for your character", false) : "" :
+                                        ReadBoolean($"Characters biography currently reads: |{character.Biography}| do you want to change it? (Y/N)") ? 
+                                                    ReadString("Enter an optional biography for your character", false) : character.Biography;
+
+                newCharacter.Strength = ReadBoolean($"Characters Strength is currently |{character.Strength}| do you want to change it? (Y/N)") ? 
+                                        ReadInt32($"Enter your characters (Strength) Attribute Values - Range: ({Character.MinAttribute} - {Character.MaxAttribute})", Character.MinAttribute, Character.MaxAttribute) : character.Strength;
+                newCharacter.Intelligence = ReadBoolean($"Characters Intelligence is currently |{character.Intelligence}| do you want to change it? (Y/N)") ? 
+                                        ReadInt32($"Enter your characters (Intelligence) Attribute Values - Range: ({Character.MinAttribute} - {Character.MaxAttribute})", Character.MinAttribute, Character.MaxAttribute) : character.Intelligence;
+                newCharacter.Agility = ReadBoolean($"Characters Agility is currently |{character.Agility}| do you want to change it? (Y/N)") ? 
+                                        ReadInt32($"Enter your characters (Agility) Attribute Values - Range: ({Character.MinAttribute} - {Character.MaxAttribute})", Character.MinAttribute, Character.MaxAttribute) : character.Agility;
+                newCharacter.Constitution = ReadBoolean($"Characters Constitution is currently |{character.Constitution}| do you want to change it? (Y/N)") ? 
+                                        ReadInt32($"Enter your characters (Constitution) Attribute Values - Range: ({Character.MinAttribute} - {Character.MaxAttribute})", Character.MinAttribute, Character.MaxAttribute) : character.Constitution;
+                newCharacter.Charisma = ReadBoolean($"Characters Charisma is currently |{character.Charisma}| do you want to change it? (Y/N)") ? 
+                                        ReadInt32($"Enter your characters (Charisma) Attribute Values - Range: ({Character.MinAttribute} - {Character.MaxAttribute})", Character.MinAttribute, Character.MaxAttribute) : character.Charisma;
+
+                var error = newCharacter.Validate();
+                if (String.IsNullOrEmpty(error))
+                {
+                    character = newCharacter;
+                    return;
+                }
+
+                DisplayError(error);
+            } while (true);
         }
 
         static void DeleteCharacter ()
