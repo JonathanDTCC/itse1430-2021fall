@@ -12,6 +12,8 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
         {
             DisplayIntroduction();
 
+            bool done = false;
+
             do
             {
                 char choice = GetInput();
@@ -22,9 +24,10 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
                     case 'V': ViewCharacter(); break;
                     case 'E': EditCharacter(); break;
                     case 'D': DeleteCharacter(); break;
+                    case 'Q': done = ConfirmQuit(); break;
                     default: DisplayError("Unknown option"); break;
                 };
-            } while (true);
+            } while (!done);
         }
         #region Character Methods
         static void CreateCharacter()
@@ -68,10 +71,24 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
                     case "V": return 'V';
                     case "E": return 'E';
                     case "D": return 'D';
+                    case "Q": return 'Q';
                 };
 
                 DisplayError("Invalid Input");
             }
+        }
+        static bool ReadBoolean(string message)
+        {
+            Console.WriteLine(message);
+
+            do
+            {
+                var input = Console.ReadKey(true);
+                if (input.Key == ConsoleKey.Y)
+                    return true;
+                else if (input.Key == ConsoleKey.N)
+                    return false;
+            } while (true);
         }
         #endregion
         #region Display Methods
@@ -96,6 +113,7 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
             Console.WriteLine("V)iew Character");
             Console.WriteLine("E)dit Character");
             Console.WriteLine("D)elete Character");
+            Console.WriteLine("Q)uit");
         }
 
         static void DisplayError(string message)
@@ -103,6 +121,13 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(message);
             Console.ResetColor();
+        }
+        static bool ConfirmQuit ()
+        {
+            if (ReadBoolean("Are you sure you want to quit (Y/N)?"))
+                return true;
+
+            return false;
         }
         #endregion
     }
