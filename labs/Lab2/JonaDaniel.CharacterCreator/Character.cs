@@ -95,7 +95,7 @@ namespace JonaDaniel.CharacterCreator
         #endregion
         public override string ToString ()
         {
-            return $"Name: {Name}, Profession {Profession}, Race {Race}, Attribute [{Strength},{Intelligence},{Agility},{Constitution},{Charisma}]";
+            return $"Name: {Name}, Profession {Profession}, Race {Race}, Attributes [S:{Strength},I:{Intelligence},A:{Agility},Con:{Constitution},C:{Charisma}]";
         }
 
         #region Validation

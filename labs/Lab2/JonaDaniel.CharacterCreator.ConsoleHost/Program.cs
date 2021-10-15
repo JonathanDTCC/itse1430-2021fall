@@ -32,6 +32,9 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
 
         static Character character;
         #region Character Methods
+        /// <summary>
+        /// Creates a character
+        /// </summary>
         static void CreateCharacter ()
         {
             var newCharacter = new Character("temp", "unset", "unset");
@@ -61,7 +64,9 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
                 DisplayError(error);
             } while (true);
         }
-
+        /// <summary>
+        /// Views Character if one has been created
+        /// </summary>
         static void ViewCharacter ()
         {
             if (character == null)
@@ -91,7 +96,9 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
             Console.WriteLine($"Charisma: [{character.Charisma}]");
             Console.ResetColor();
         }
-
+        /// <summary>
+        /// Allows user to edit or choose to create a character
+        /// </summary>
         static void EditCharacter ()
         {
             if (character == null)
@@ -149,13 +156,23 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
 
         static void DeleteCharacter ()
         {
-            Console.WriteLine("Delete Character");
-            //TODO: Delete character
-            //TODO: Confirmation
+            if (character == null)
+            {
+                DisplayError("There is no character to delete");
+                return;
+            }
+
+            if (ReadBoolean("Are you sure you want to delete |" + character.Name + "|? (Y/N)"))
+            {
+                var deletedCharacter = character.ToString();
+                character = null;
+                DisplayMessage($"Character: {deletedCharacter} was deleted");
+                return;
+            }
         }
         #endregion
         #region Input Methods
-        static string ReadString ( string message, bool required )
+        private static string ReadString ( string message, bool required )
         {
             Console.WriteLine(message);
 
@@ -169,7 +186,7 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
                 DisplayError("Value is required");
             } while (true);
         }
-        static string ChooseFromList ( string selectionType, string[] validSelections, bool required, bool limited )
+        private static string ChooseFromList ( string selectionType, string[] validSelections, bool required, bool limited )
         {
             var append = limited ? "from this list:" : "";
             Console.WriteLine($"Choose your characters {selectionType} {append}");
@@ -197,7 +214,7 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
                 DisplayError("Value is required");
             } while (true);
         }
-        static int ReadInt32 ( string message, int minimumValue, int maximumValue )
+        private static int ReadInt32 ( string message, int minimumValue, int maximumValue )
         {
             Console.WriteLine(message);
 
@@ -211,7 +228,7 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
                 DisplayError("The value must be an integral value >= " + minimumValue + " and <= " + maximumValue);
             } while (true);
         }
-        static char GetInput ()
+        private static char GetInput ()
         {
             while (true)
             {
@@ -230,7 +247,7 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
                 DisplayError("Invalid Input");
             }
         }
-        static bool ReadBoolean ( string message )
+        private static bool ReadBoolean ( string message )
         {
             Console.WriteLine(message);
 
@@ -245,7 +262,7 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
         }
         #endregion
         #region Display Methods
-        static void DisplayIntroduction ()
+        private static void DisplayIntroduction ()
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Jonathan Daniel");
@@ -254,7 +271,10 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
 
             DisplayMenu();
         }
-        static void DisplayMenu ()
+        /// <summary>
+        /// Displays the Main Menu
+        /// </summary>
+        private static void DisplayMenu ()
         {
             Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -270,13 +290,19 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
             Console.WriteLine("Q)uit");
         }
 
-        static void DisplayError ( string message )
+        private static void DisplayError ( string message )
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(message);
             Console.ResetColor();
         }
-        static bool ConfirmQuit ()
+        private static void DisplayMessage ( string message )
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
+        private static bool ConfirmQuit ()
         {
             if (ReadBoolean("Are you sure you want to quit (Y/N)?"))
                 return true;
