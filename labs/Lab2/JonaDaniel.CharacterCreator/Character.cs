@@ -150,18 +150,19 @@ namespace JonaDaniel.CharacterCreator
         {
             if (String.IsNullOrEmpty(valueToCheck))
             {
-                message = "Character needs a {type}";
+                message = $"Character needs a {type}";
                 return false;
             }
             foreach (var v in acceptedValues)
             {
                 if (String.Equals(v, valueToCheck))
-                    break;
-                message = $"{valueToCheck} Isn't a valid {type} for the character";
-                return false;
+                {
+                    message = null;
+                    return true;
+                }
             }
-            message = "";
-            return true;
+            message = $"{valueToCheck} Isn't a valid {type} for the character";
+            return false;
         }
         #endregion
     }

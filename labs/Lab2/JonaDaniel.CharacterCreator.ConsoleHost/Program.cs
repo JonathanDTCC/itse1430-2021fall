@@ -29,11 +29,37 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
                 };
             } while (!done);
         }
+
+        static Character character;
         #region Character Methods
         static void CreateCharacter ()
         {
-            Console.WriteLine("Create Character");
-            //TODO: Creation Later Story
+            var newCharacter = new Character("temp", "unset", "unset");
+
+            do
+            {
+                newCharacter.Name = ReadString("Enter your characters name: ", true);
+
+                newCharacter.Profession = ChooseFromList("Profession", Character.ValidProfessions, true, true);
+                newCharacter.Race = ChooseFromList("Race", Character.ValidRaces, true, true);
+
+                newCharacter.Biography = ReadString("Enter an optional biography for your character", false);
+
+                newCharacter.Strength = ReadInt32($"Enter your characters (Strength) Attribute Values - Range: ({Character.MinAttribute} - {Character.MaxAttribute})", Character.MinAttribute, Character.MaxAttribute);
+                newCharacter.Intelligence = ReadInt32($"Enter your characters (Intelligence) Attribute Values - Range: ({Character.MinAttribute} - {Character.MaxAttribute})", Character.MinAttribute, Character.MaxAttribute);
+                newCharacter.Agility= ReadInt32($"Enter your characters (Agility) Attribute Values - Range: ({Character.MinAttribute} - {Character.MaxAttribute})", Character.MinAttribute, Character.MaxAttribute);
+                newCharacter.Constitution = ReadInt32($"Enter your characters (Constitution) Attribute Values - Range: ({Character.MinAttribute} - {Character.MaxAttribute})", Character.MinAttribute, Character.MaxAttribute);
+                newCharacter.Charisma = ReadInt32($"Enter your characters (Charisma) Attribute Values - Range: ({Character.MinAttribute} - {Character.MaxAttribute})", Character.MinAttribute, Character.MaxAttribute);
+
+                var error = newCharacter.Validate();
+                if (String.IsNullOrEmpty(error))
+                {
+                    character = newCharacter;
+                    return;
+                }
+
+                DisplayError(error);
+            } while (true);
         }
 
         static void ViewCharacter ()
@@ -58,12 +84,68 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
         }
         #endregion
         #region Input Methods
+        static string ReadString ( string message, bool required )
+        {
+            Console.WriteLine(message);
+
+            do
+            {
+                var input = Console.ReadLine().Trim();
+
+                if (!String.IsNullOrEmpty(input) || !required)
+                    return input;
+
+                DisplayError("Value is required");
+            } while (true);
+        }
+        static string ChooseFromList ( string selectionType, string[] validSelections, bool required, bool limited )
+        {
+            var append = limited ? "from this list:" : "";
+            Console.WriteLine($"Choose your characters {selectionType} {append}");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            foreach (var s in validSelections)
+                Console.WriteLine(s);
+            Console.ResetColor();
+
+            do
+            {
+                var input = Console.ReadLine().Trim();
+
+                if (!String.IsNullOrEmpty(input) || !required)
+                {
+                    if (!limited)
+                        return input;
+                    foreach (var s in validSelections)
+                    {
+                        if (String.Equals(input, s, StringComparison.CurrentCultureIgnoreCase))
+                            return s;
+                    }
+                    DisplayError("You must choose a valid character " + selectionType);
+                    continue;
+                }
+                DisplayError("Value is required");
+            } while (true);
+        }
+        static int ReadInt32 ( string message, int minimumValue, int maximumValue )
+        {
+            Console.WriteLine(message);
+
+            do
+            {
+                var input = Console.ReadLine();
+
+                if (Int32.TryParse(input, out var result) && result >= minimumValue && result <= maximumValue)
+                    return result;
+
+                DisplayError("The value must be an integral value >= " + minimumValue + " and <= " + maximumValue);
+            } while (true);
+        }
         static char GetInput ()
         {
             while (true)
             {
                 DisplayMenu();
-                string input = Console.ReadLine().Trim();
+                var input = Console.ReadLine().Trim();
 
                 switch (input.ToUpper())
                 {
