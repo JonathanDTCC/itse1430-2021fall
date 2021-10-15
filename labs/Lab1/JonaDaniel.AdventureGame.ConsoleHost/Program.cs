@@ -12,12 +12,15 @@ namespace JonaDaniel.AdventureGame.ConsoleHost
         {
             DisplayIntroduction();
 
+            bool done = false;
+
             do
             {
                 string command = GetInput();
 
                 switch(command)
                 {
+                    case "quit" done = HandleQuit(); break;
                     case "look": SearchArea(); break;
                     case "move":
                     case "movenorth": MoveNorth(); break;
@@ -26,7 +29,7 @@ namespace JonaDaniel.AdventureGame.ConsoleHost
                     case "movewest": MoveWest(); break;
                     default: DisplayError("Unknown option"); break;
                 };
-            } while (true);
+            } while (!done);
         }
         static void SearchArea()
         {
