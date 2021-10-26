@@ -13,6 +13,13 @@ namespace MovieLibrary.WinHost
             //Runs at design time as well - be careful
         }
 
+        protected override void OnLoad ( EventArgs e )
+        {
+            base.OnLoad(e);
+
+            UpdateUI();
+        }
+
         private void OnFileExit ( object sender, EventArgs e )
         {
             //Confirm exit?
@@ -74,12 +81,15 @@ namespace MovieLibrary.WinHost
 
         private Movie _movie;
 
+        private MovieDatabase _movies = new MovieDatabase();
+
         private void UpdateUI ()
         {
             //Update movie list
-            var movies = (_movie != null) ? new Movie[1] : new Movie[0];
-            if(_movie != null)
-                movies[0] =_movie;
+            Movie[] movies = _movies.GetAll();
+            //var movie = movies[1] = new Movie();
+            //movie.Title = "Dnue";
+            //movie.Description = "something";
 
             var bindingSource = new BindingSource();
             bindingSource.DataSource = movies;
