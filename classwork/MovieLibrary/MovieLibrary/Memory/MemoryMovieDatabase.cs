@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -85,9 +86,13 @@ namespace MovieLibrary.Memory
         public Movie Add ( Movie movie, out string error )
         {
             //Movie must be valid
-            error = movie.Validate();
-            if (!String.IsNullOrEmpty(error))
+            var validator = new ObjectValidator();
+            if(!validator.TryValidate(movie, out error))
                 return null;
+
+            //error = movie.Validate();
+            //if (!String.IsNullOrEmpty(error))
+            //    return null;
 
             //Movie title must be unique
             var existing = FindByTitle(movie.Title);
@@ -122,9 +127,13 @@ namespace MovieLibrary.Memory
         public string Update ( int id, Movie movie )
         {
             //Movie must be valid
-            var error = movie.Validate();
-            if (!String.IsNullOrEmpty(error))
+            var validator = new ObjectValidator();
+            if (!validator.TryValidate(movie, out var error))
                 return error;
+
+            //var error = movie.Validate();
+            //if (!String.IsNullOrEmpty(error))
+            //    return error;
 
             //Movie must exist
             var existing = FindById(id);
@@ -177,20 +186,29 @@ namespace MovieLibrary.Memory
             return movie?.Clone();
         }
         //Get All
-        public Movie[] GetAll ()
+        public IEnumerable<Movie> GetAll ()
         {
             //NEVER DO THIS - should not return a ref type directly, it can be modified
             //return _items;
 
-            //Must clone both array and movies to return new copies
-            //Each iteration the next element is copied to the item variable
-            var items = new Movie[_items.Count];
+            int counter = 0;
 
-            var index = 0;
+            //Use iterator syntax
             foreach (var item in _items)
-                items[index++] = item.Clone();
+            {
+                ++counter;
+                yield return item.Clone();
+            };
 
-            return items;
+            ////Must clone both array and movies to return new copies
+            ////Each iteration the next element is copied to the item variable
+            //var items = new Movie[_items.Count];
+
+            //var index = 0;
+            //foreach (var item in _items)
+            //    items[index++] = item.Clone();
+
+            //return items;
         }
 
         //Dynamically resizing array

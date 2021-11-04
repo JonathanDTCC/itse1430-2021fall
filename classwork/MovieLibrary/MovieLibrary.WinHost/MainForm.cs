@@ -108,10 +108,7 @@ namespace MovieLibrary.WinHost
         private void UpdateUI ()
         {
             //Update movie list
-            Movie[] movies = _movies.GetAll();
-            //var movie = movies[1] = new Movie();
-            //movie.Title = "Dnue";
-            //movie.Description = "something";
+            var movies = _movies.GetAll();
 
             var bindingSource = new BindingSource();
             bindingSource.DataSource = movies;
