@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace MovieLibrary
 {
-    public class ObjectValidator
+    public static class ObjectValidator
     {
-        public IEnumerable<ValidationResult> TryValidate ( IValidatableObject instance )
+        public static IEnumerable<ValidationResult> TryValidate ( IValidatableObject instance )
         {
             var errors = new List<ValidationResult>();
             var context = new ValidationContext(instance);
@@ -23,7 +23,7 @@ namespace MovieLibrary
             return errors;
         }
 
-        public bool TryValidate ( IValidatableObject instance, out string error )
+        public static bool TryValidate ( IValidatableObject instance, out string error )
         {
             var errors = TryValidate(instance);
             error = errors.FirstOrDefault()?.ErrorMessage;

@@ -77,8 +77,7 @@ namespace MovieLibrary.WinHost
             movie.IsClassic = _chkIsClassic.Checked;
 
             //Validate
-            var validator = new ObjectValidator();
-            if (!validator.TryValidate(movie, out var error))
+            if (!ObjectValidator.TryValidate(movie, out var error))
             {
                 DisplayError(error, "Error");
                 DialogResult = DialogResult.None;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 
 using MovieLibrary.Memory;
@@ -19,7 +20,7 @@ namespace MovieLibrary.WinHost
         {
             base.OnLoad(e);
 
-            UpdateUI();
+            UpdateUI(true);
         }
 
         private void OnFileExit ( object sender, EventArgs e )
@@ -105,13 +106,24 @@ namespace MovieLibrary.WinHost
 
         private IMovieDatabase _movies = new MemoryMovieDatabase();
 
-        private void UpdateUI ()
+        private void UpdateUI ( bool isFirstRun = false )
         {
+            //IEnumerable<TextBox> onlyTextBoxes = Controls.OfType<TextBox>();
+
             //Update movie list
             var movies = _movies.GetAll();
+            if (isFirstRun && !movies.Any())
+            {
+                if(Confirm("Do you want to seed the database?", "Seed"))
+                {
+                    _movies.Seed();
+                    //SeedDatabase.Seed(_movies);
+                    movies = _movies.GetAll();
+                };
+            };
 
             var bindingSource = new BindingSource();
-            bindingSource.DataSource = movies;
+            bindingSource.DataSource = movies.ToArray();
 
             //bind the movies to the listbox
             _listMovies.DataSource = bindingSource;
