@@ -37,7 +37,7 @@ namespace MovieLibrary
 
         //Mixed accessibility - one accessor may be more restrictive
         //public int Id { get; private set; }
-        public int Id { get; set;  } //private set ;
+        public int Id { get; set; } //private set ;
 
         // Properties - methods with field-like syntax, exposes data
         //   Property has a type and name
@@ -45,38 +45,52 @@ namespace MovieLibrary
         //   Property has a getter to read the value and a setter to write the value
         //   Getter must return a value of property type
         //   Setter has a single parameter called `value` of property type
+
+        /// <summary>Title</summary>
         public string Title
         {
-            //null coalescing ::= E ?? E (returns first non-null expression)
-            //null condiitional ::= E ?. M (returns M?) changes the type of the expression
+            //get { return _title ?? ""; }
+            //set { _title = value?.Trim(); }
 
-            //Read: T get_Title ()
-            get {
-                return _title ?? "";
-
-                //return (_title != null) ? _title : "";
-                //if (_title == null)
-                //    return "";
-
-                //return _title; 
-            }
-
-            //Write void set_Title ( string value ) 
-            set {
-                //_title = value;
-                //_title = (value != null) ? value.Trim() : null;
-                _title = value?.Trim();
-
-                //Movie m;
-                //int id = m?.Id ?? 0; //int?
-            }
+            //Expression body for single line accesssors
+            get => _title ?? "";
+            set => _title = value?.Trim();
         }
+        //public string Title
+        //{
+        //    //null coalescing ::= E ?? E (returns first non-null expression)
+        //    //null condiitional ::= E ?. M (returns M?) changes the type of the expression
+
+        //    //Read: T get_Title ()
+        //    get {
+        //        return _title ?? "";
+
+        //        //return (_title != null) ? _title : "";
+        //        //if (_title == null)
+        //        //    return "";
+
+        //        //return _title; 
+        //    }
+
+        //    //Write void set_Title ( string value ) 
+        //    set {
+        //        //_title = value;
+        //        //_title = (value != null) ? value.Trim() : null;
+        //        _title = value?.Trim();
+
+        //        //Movie m;
+        //        //int id = m?.Id ?? 0; //int?
+        //    }
+        //}
 
         /// <summary>Gets or sets the description.</summary>
         public string Description
         {
-            get { return (_description != null) ? _description : ""; }
-            set { _description = (value != null) ? value.Trim() : null; }
+            //get { return (_description != null) ? _description : ""; }
+            //set { _description = (value != null) ? value.Trim() : null; }
+
+            get => (_description != null) ? _description : "";
+            set => _description = (value != null) ? value.Trim() : null;
         }
 
         public string Rating
@@ -150,10 +164,13 @@ namespace MovieLibrary
         //{
         //    return ReleaseYear < 1922;
         //}
-        public bool IsBlackAndWhite
-        {
-            get { return ReleaseYear < 1922; }
-        }
+        public bool IsBlackAndWhite => ReleaseYear < 1922;
+        #region IsBlackAndWhite
+        //{
+        //    //get { return ReleaseYear < 1922; }
+        //    get => ReleaseYear < 1922;
+        //}
+        #endregion
 
         // Methods - provide functionality (function inside a class)
         //   Can reference fields in method
@@ -161,25 +178,37 @@ namespace MovieLibrary
 
         /// <summary>Copies the movie.</summary>
         /// <returns>A copy of the movie.</returns>
-        public Movie Clone ()
-        {
-            var movie = new Movie();
-            movie.Id = Id;
-            movie.Title = Title;
-            movie.Description = Description;
-            movie.RunLength = RunLength;
-            movie.ReleaseYear = ReleaseYear;
-            movie.ReviewRating = ReviewRating;
-            movie.Rating = Rating;
-            movie.IsClassic = IsClassic;
+        //public Movie Clone ()
+        //{
+        //    var movie = new Movie();
+        //    movie.Id = Id;
+        //    movie.Title = Title;
+        //    movie.Description = Description;
+        //    movie.RunLength = RunLength;
+        //    movie.ReleaseYear = ReleaseYear;
+        //    movie.ReviewRating = ReviewRating;
+        //    movie.Rating = Rating;
+        //    movie.IsClassic = IsClassic;
 
-            return movie;
-        }
+        //    return movie;
+        //}
+        public Movie Clone () => new Movie() {
+            Id = Id,
+            Title = Title,
+            Description = Description,
+            RunLength = RunLength,
+            ReleaseYear = ReleaseYear,
+            ReviewRating = ReviewRating,
+            Rating = Rating,
+            IsClassic = IsClassic,
+        };
 
-        public override string ToString ()
-        {
-            return $"{Title} ({ReleaseYear})";
-        }
+        //public override string ToString ()
+        //{
+        //    return $"{Title} ({ReleaseYear})";
+        //}
+        //Expression body
+        public override string ToString () => $"{Title} ({ReleaseYear})";
 
         /// <summary>Validates the object.</summary>
         /// <returns>The error, if any.</returns>
@@ -202,7 +231,7 @@ namespace MovieLibrary
                 errors.Add(new ValidationResult("Release Year must be at least " + MinimumReleaseYear, new[] { nameof(ReleaseYear) }));
 
             //Rating is required
-            if (String.IsNullOrEmpty(Rating))            
+            if (String.IsNullOrEmpty(Rating))
                 errors.Add(new ValidationResult("Rating is required", new[] { nameof(Rating) }));
 
             return errors;
