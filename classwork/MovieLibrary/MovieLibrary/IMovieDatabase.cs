@@ -22,7 +22,7 @@ namespace MovieLibrary
         /// <param name="movie"></param>
         /// <param name="error"></param>
         /// <returns></returns>
-        Movie Add ( Movie movie, out string error );
+        Movie Add ( Movie movie );
 
         /// <summary>
         /// Deletes a movie
@@ -49,6 +49,6 @@ namespace MovieLibrary
         /// <param name="id"></param>
         /// <param name="movie"></param>
         /// <returns></returns>
-        string Update ( int id, Movie movie );
+        void Update ( int id, Movie movie );
     }
 }

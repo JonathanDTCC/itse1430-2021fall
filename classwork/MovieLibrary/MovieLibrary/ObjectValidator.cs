@@ -30,5 +30,11 @@ namespace MovieLibrary
 
             return String.IsNullOrEmpty(error);
         }
+
+        public static void Validate(IValidatableObject instance)
+        {
+            var context = new ValidationContext(instance);
+            Validator.ValidateObject(instance, context, true);
+        }
     }
 }

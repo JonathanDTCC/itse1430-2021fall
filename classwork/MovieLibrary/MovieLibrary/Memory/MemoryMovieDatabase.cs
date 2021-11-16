@@ -14,27 +14,28 @@ namespace MovieLibrary.Memory
     public class MemoryMovieDatabase : IMovieDatabase
     {
         //Not visible to code that uses the interface
-        public void IsOnlyAvailableInMemoryMovieDatabase () 
+        public void IsOnlyAvailableInMemoryMovieDatabase ()
         { }
 
         //TODO: Error Handling
-        public Movie Add ( Movie movie, out string error )
+        public Movie Add ( Movie movie )
         {
-            //Movie must be valid
-            if(!ObjectValidator.TryValidate(movie, out error))
-                return null;
+            //Validation
+            // Movie is not null
+            // Movie is valid
+            // Movie cannot already exist
+            //if (movie == null)
+            // throw new ArgumentNullException(nameof(movie));
+            var item = movie ?? throw new ArgumentNullException(nameof(movie));
 
-            //error = movie.Validate();
-            //if (!String.IsNullOrEmpty(error))
-            //    return null;
+            //Movie must be valid
+            ObjectValidator.Validate(movie);
 
             //Movie title must be unique
             var existing = FindByTitle(movie.Title);
             if (existing != null)
-            {
-                error = $"{movie.Title} already exists";
-                return null;
-            };
+                throw new InvalidOperationException("Movie must be unique");
+
 
             //Clone
             var newMovie = movie.Clone();
@@ -60,28 +61,32 @@ namespace MovieLibrary.Memory
         }
 
         //Update
-        public string Update ( int id, Movie movie )
+        public void Update ( int id, Movie movie )
         {
-            //Movie must be valid
-            if (!ObjectValidator.TryValidate(movie, out var error))
-                return error;
+            //Validation
+            // Id must be > 0
+            // Movie is not null
+            // Movie is vaid
+            // Movie does not already exist
+            if (id <= 0)
+                throw new ArgumentOutOfRangeException(nameof(id), "Id must be greater than 0.");
+            if (movie == null)
+                throw new ArgumentNullException(nameof(movie));
 
-            //var error = movie.Validate();
-            //if (!String.IsNullOrEmpty(error))
-            //    return error;
+            //Movie must be valid
+            ObjectValidator.Validate(movie);
 
             //Movie must exist
             var existing = FindById(id);
             if (existing == null)
-                return "Movie not found";
+                throw new Exception("Movie not found");
 
             //Movie title must be unique
             var dup = FindByTitle(movie.Title);
             if (dup != null && dup.Id != id)
-                return "Movie must be unique";
+                throw new InvalidOperationException("Movie must be unique");
 
             Copy(existing, movie);
-            return null;
         }
 
         private void Copy ( Movie target, Movie source )
@@ -97,6 +102,9 @@ namespace MovieLibrary.Memory
         //Delete
         public void Delete ( int id )
         {
+            if (id <= 0)
+                throw new ArgumentOutOfRangeException(nameof(id), "Id must be greater than 0.");
+
             //TODO: Validate id
             var movie = FindById(id);
             if (movie != null)
@@ -127,6 +135,9 @@ namespace MovieLibrary.Memory
         //Get
         public Movie Get ( int id )
         {
+            if (id <= 0)
+                throw new ArgumentOutOfRangeException(nameof(id), "Id must be greater than 0.");
+
             //TODO: Validate id
             var movie = FindById(id);
 

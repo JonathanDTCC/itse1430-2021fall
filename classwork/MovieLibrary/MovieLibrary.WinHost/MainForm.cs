@@ -62,14 +62,30 @@ namespace MovieLibrary.WinHost
                 if (dlg.ShowDialog(this) != DialogResult.OK)
                     return;
 
-                //TODO: Error handling
-                if (_movies.Add(dlg.Movie, out var error) != null)
-                    break;
-
-                DisplayError(error, "Add Failed");
+                try
+                {
+                    _movies.Add(dlg.Movie);
+                    UpdateUI();
+                    return;
+                } catch (ArgumentException ex)
+                {
+                    DisplayError(ex.Message, "Progammer Error");
+                } catch (InvalidOperationException ex)
+                {
+                    DisplayError(ex.Message, "Not Now");
+                } catch (NotSupportedException ex)
+                {
+                    DisplayError("Not supported", "error");
+                    //Do some logging
+                    throw;
+                } catch (System.IO.IOException ex) 
+                {
+                    throw new Exception("IO failed", ex);
+                } catch (Exception ex)
+                {
+                    DisplayError(ex.Message, "Failed");
+                };
             } while (true);
-
-            UpdateUI();
         }
 
         private void OnMovieEdit ( object sender, EventArgs e )
@@ -87,15 +103,16 @@ namespace MovieLibrary.WinHost
                 if (dlg.ShowDialog() != DialogResult.OK)
                     return;
 
-                //TODO: Error handling
-                var error = _movies.Update(movie.Id, dlg.Movie);
-                if (String.IsNullOrEmpty(error))
-                    break;
-
-                DisplayError(error, "Update Failed");
+                try
+                {
+                    _movies.Update(movie.Id, dlg.Movie);
+                    UpdateUI();
+                    return;
+                } catch (Exception ex)
+                {
+                    DisplayError(ex.Message, "Update Failed");
+                }
             } while (true);
-
-            UpdateUI();
         }
 
         private Movie GetSelectedMovie ()
@@ -114,7 +131,7 @@ namespace MovieLibrary.WinHost
             var movies = _movies.GetAll();
             if (isFirstRun && !movies.Any())
             {
-                if(Confirm("Do you want to seed the database?", "Seed"))
+                if (Confirm("Do you want to seed the database?", "Seed"))
                 {
                     _movies.Seed();
                     //SeedDatabase.Seed(_movies);
@@ -153,9 +170,15 @@ namespace MovieLibrary.WinHost
             if (!Confirm($"Are you sure you want to delete '{movie.Title}'?", "Delete"))
                 return;
 
-            //TODO: Error handling
+            try
+            {
             _movies.Delete(movie.Id);
             UpdateUI();
+            } catch (Exception ex)
+            {
+                DisplayError(ex.Message, "Delete Failed");
+            }
+
         }
 
         private void DisplayError ( string message, string title )
