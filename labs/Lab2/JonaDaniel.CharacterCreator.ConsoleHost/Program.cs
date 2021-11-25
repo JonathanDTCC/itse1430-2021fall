@@ -30,14 +30,14 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
             } while (!done);
         }
 
-        static Character character;
+        private static Character character;
         #region Character Methods
         /// <summary>
         /// Creates a character
         /// </summary>
-        static void CreateCharacter ()
+        private static void CreateCharacter ()
         {
-            var newCharacter = new Character("temp", "unset", "unset");
+            var newCharacter = new Character();
 
             do
             {
@@ -54,6 +54,7 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
                 newCharacter.Constitution = ReadInt32($"Enter your characters (Constitution) Attribute Values - Range: ({Character.MinAttribute} - {Character.MaxAttribute})", Character.MinAttribute, Character.MaxAttribute);
                 newCharacter.Charisma = ReadInt32($"Enter your characters (Charisma) Attribute Values - Range: ({Character.MinAttribute} - {Character.MaxAttribute})", Character.MinAttribute, Character.MaxAttribute);
 
+
                 var error = newCharacter.Validate();
                 if (String.IsNullOrEmpty(error))
                 {
@@ -67,7 +68,7 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
         /// <summary>
         /// Views Character if one has been created
         /// </summary>
-        static void ViewCharacter ()
+        private static void ViewCharacter ()
         {
             if (character == null)
             {
@@ -99,7 +100,7 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
         /// <summary>
         /// Allows user to edit or choose to create a character
         /// </summary>
-        static void EditCharacter ()
+        private static void EditCharacter ()
         {
             if (character == null)
             {
@@ -114,33 +115,33 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
             Console.WriteLine("This is your current character");
             ViewCharacter();
 
-            var newCharacter = new Character(character.Name, character.Profession, character.Race);
+            var newCharacter = new Character();
 
             do
             {
-                newCharacter.Name = ReadBoolean($"Characters name is currently |{character.Name}| do you want to change it? (Y/N)") ? 
+                newCharacter.Name = ReadBoolean($"Characters name is currently |{character.Name}| do you want to change it? (Y/N)") ?
                                     ReadString("Enter your characters name: ", true) : character.Name;
 
-                newCharacter.Profession = ReadBoolean($"Characters profession is currently |{character.Profession}| do you want to change it? (Y/N)") ? 
+                newCharacter.Profession = ReadBoolean($"Characters profession is currently |{character.Profession}| do you want to change it? (Y/N)") ?
                                         ChooseFromList("Profession", Character.ValidProfessions, true, true) : character.Profession;
-                newCharacter.Race = ReadBoolean($"Characters race is currently |{character.Race}| do you want to change it? (Y/N)") ? 
+                newCharacter.Race = ReadBoolean($"Characters race is currently |{character.Race}| do you want to change it? (Y/N)") ?
                                     ChooseFromList("Race", Character.ValidRaces, true, true) : character.Race;
 
-                newCharacter.Biography = (character.Biography == "") ? 
-                                        ReadBoolean("Would you like to add a Biography entry to your character? (Y/N)") ? 
+                newCharacter.Biography = (character.Biography == "") ?
+                                        ReadBoolean("Would you like to add a Biography entry to your character? (Y/N)") ?
                                                     ReadString("Enter an optional biography for your character", false) : "" :
-                                        ReadBoolean($"Characters biography currently reads: |{character.Biography}| do you want to change it? (Y/N)") ? 
+                                        ReadBoolean($"Characters biography currently reads: |{character.Biography}| do you want to change it? (Y/N)") ?
                                                     ReadString("Enter an optional biography for your character", false) : character.Biography;
 
-                newCharacter.Strength = ReadBoolean($"Characters Strength is currently |{character.Strength}| do you want to change it? (Y/N)") ? 
+                newCharacter.Strength = ReadBoolean($"Characters Strength is currently |{character.Strength}| do you want to change it? (Y/N)") ?
                                         ReadInt32($"Enter your characters (Strength) Attribute Values - Range: ({Character.MinAttribute} - {Character.MaxAttribute})", Character.MinAttribute, Character.MaxAttribute) : character.Strength;
-                newCharacter.Intelligence = ReadBoolean($"Characters Intelligence is currently |{character.Intelligence}| do you want to change it? (Y/N)") ? 
+                newCharacter.Intelligence = ReadBoolean($"Characters Intelligence is currently |{character.Intelligence}| do you want to change it? (Y/N)") ?
                                         ReadInt32($"Enter your characters (Intelligence) Attribute Values - Range: ({Character.MinAttribute} - {Character.MaxAttribute})", Character.MinAttribute, Character.MaxAttribute) : character.Intelligence;
-                newCharacter.Agility = ReadBoolean($"Characters Agility is currently |{character.Agility}| do you want to change it? (Y/N)") ? 
+                newCharacter.Agility = ReadBoolean($"Characters Agility is currently |{character.Agility}| do you want to change it? (Y/N)") ?
                                         ReadInt32($"Enter your characters (Agility) Attribute Values - Range: ({Character.MinAttribute} - {Character.MaxAttribute})", Character.MinAttribute, Character.MaxAttribute) : character.Agility;
-                newCharacter.Constitution = ReadBoolean($"Characters Constitution is currently |{character.Constitution}| do you want to change it? (Y/N)") ? 
+                newCharacter.Constitution = ReadBoolean($"Characters Constitution is currently |{character.Constitution}| do you want to change it? (Y/N)") ?
                                         ReadInt32($"Enter your characters (Constitution) Attribute Values - Range: ({Character.MinAttribute} - {Character.MaxAttribute})", Character.MinAttribute, Character.MaxAttribute) : character.Constitution;
-                newCharacter.Charisma = ReadBoolean($"Characters Charisma is currently |{character.Charisma}| do you want to change it? (Y/N)") ? 
+                newCharacter.Charisma = ReadBoolean($"Characters Charisma is currently |{character.Charisma}| do you want to change it? (Y/N)") ?
                                         ReadInt32($"Enter your characters (Charisma) Attribute Values - Range: ({Character.MinAttribute} - {Character.MaxAttribute})", Character.MinAttribute, Character.MaxAttribute) : character.Charisma;
 
                 var error = newCharacter.Validate();
@@ -154,7 +155,7 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
             } while (true);
         }
 
-        static void DeleteCharacter ()
+        private static void DeleteCharacter ()
         {
             if (character == null)
             {
