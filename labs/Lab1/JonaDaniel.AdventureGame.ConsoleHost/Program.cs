@@ -54,13 +54,10 @@ namespace JonaDaniel.AdventureGame.ConsoleHost
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("");
-            Console.WriteLine("Move");
-            Console.WriteLine("MoveNorth");
-            Console.WriteLine("MoveSouth");
-            Console.WriteLine("MoveEast");
-            Console.WriteLine("MoveWest");
-            Console.WriteLine("Look");
-            Console.WriteLine("Quit");
+            Console.WriteLine("Move | MoveNorth | MoveSouth | Move East | Move West ::= Move in the indicated direction");
+            Console.WriteLine("Look | Search ::= Searches the current area");
+            Console.WriteLine("Help ::= Get information about available commands");
+            Console.WriteLine("Quit ::= Quit the program");
             Console.ResetColor();
         }
         static void DisplayError ( string message )
@@ -131,6 +128,7 @@ namespace JonaDaniel.AdventureGame.ConsoleHost
                     case "MOVESOUTH": return "movesouth";
                     case "MOVEEAST": return "moveeast";
                     case "MOVEWEST": return "movewest";
+                    case "SEARCH": 
                     case "LOOK": return "look";
                     case "HELP": return "help";
                     case "QUIT": return "quit";
@@ -138,7 +136,6 @@ namespace JonaDaniel.AdventureGame.ConsoleHost
 
                 DisplayError("I don't know what that means");
                 Console.WriteLine("Type 'help' for a list of commands");
-                Console.WriteLine("");
             }
         }
         #endregion
