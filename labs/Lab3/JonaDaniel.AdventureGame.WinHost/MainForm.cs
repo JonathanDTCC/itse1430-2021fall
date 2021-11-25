@@ -22,10 +22,15 @@ namespace JonaDaniel.AdventureGame.WinHost
             UpdateUI();
         }
 
-        private Character _character;
+        private Character _character;   
+        private Character GetSelectedCharacter () => _listCharacters.SelectedItem as Character;
+
+        #region Exit and About Buttons
         private void OnFileExit ( object sender, EventArgs e )
         {
-            //TODO: Confirm
+            if (!Confirm("Do you want to quit?", "Confirm"))
+                return;
+
             Close();
         }
 
@@ -35,7 +40,9 @@ namespace JonaDaniel.AdventureGame.WinHost
 
             dlg.ShowDialog();
         }
+        #endregion
 
+        #region Character Create, Edit, Delete Buttons
         private void OnCharacterNew ( object sender, EventArgs e )
         {
             var dlg = new CharacterForm();
@@ -48,15 +55,6 @@ namespace JonaDaniel.AdventureGame.WinHost
 
             UpdateUI();
         }
-
-        private void UpdateUI ()
-        {
-            var bindingSource = new BindingSource();
-            bindingSource.DataSource = _character;
-
-            _listCharacters.DataSource = bindingSource;
-        }
-
         private void OnCharacterEdit ( object sender, EventArgs e )
         {
             var character = GetSelectedCharacter();
@@ -73,7 +71,32 @@ namespace JonaDaniel.AdventureGame.WinHost
 
             UpdateUI();
         }
+        private void OnCharacterDelete ( object sender, EventArgs e )
+        {
+            var character = GetSelectedCharacter();
+            if (character == null)
+                return;
 
-        private Character GetSelectedCharacter () => _listCharacters.SelectedItem as Character;
+            if (!Confirm($"Are you sure you want to delete '{character.Name}'?", "Delete"))
+                return;
+
+            _character = null;
+            UpdateUI();
+        }
+        #endregion
+        private void UpdateUI ()
+        {
+            var bindingSource = new BindingSource();
+            bindingSource.DataSource = _character;
+
+            _listCharacters.DataSource = bindingSource;
+        }
+
+        #region Popups Dialogs
+        private bool Confirm ( string message, string title ) => MessageBox.Show(this, message, title,
+                                                                MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                                                                == DialogResult.Yes;
+
+        #endregion
     }
 }

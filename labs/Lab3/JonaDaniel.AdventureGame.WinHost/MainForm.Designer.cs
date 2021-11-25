@@ -86,7 +86,7 @@ namespace JonaDaniel.AdventureGame.WinHost
             // 
             this.createToolStripMenuItem.Name = "createToolStripMenuItem";
             this.createToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.createToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.createToolStripMenuItem.Text = "&New";
             this.createToolStripMenuItem.Click += new System.EventHandler(this.OnCharacterNew);
             // 
@@ -101,8 +101,10 @@ namespace JonaDaniel.AdventureGame.WinHost
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.deleteToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.deleteToolStripMenuItem.Text = "&Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.OnCharacterDelete);
             // 
             // helpToolStripMenuItem
             // 
