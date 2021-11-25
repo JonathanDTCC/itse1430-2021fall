@@ -9,4 +9,8 @@
     <Description>ITSE 1430 Fall 2021</Description>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\JonaDaniel.CharacterCreator\JonaDaniel.AdventureGame.csproj" />
+  </ItemGroup>
+
 </Project>

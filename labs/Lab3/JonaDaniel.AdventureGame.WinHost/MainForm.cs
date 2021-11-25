@@ -6,8 +6,6 @@ using System;
 using System.Linq;
 using System.Windows.Forms;
 
-using JonaDaniel.AdventureGame;
-
 namespace JonaDaniel.AdventureGame.WinHost
 {
     public partial class MainForm : Form
@@ -17,6 +15,7 @@ namespace JonaDaniel.AdventureGame.WinHost
             InitializeComponent();
         }
 
+        private Character _character;
         private void OnFileExit ( object sender, EventArgs e )
         {
             //TODO: Confirm
@@ -28,6 +27,17 @@ namespace JonaDaniel.AdventureGame.WinHost
             var dlg = new AboutBox();
 
             dlg.ShowDialog();
+        }
+
+        private void OnCharacterNew ( object sender, EventArgs e )
+        {
+            var dlg = new CharacterForm();
+            dlg.StartPosition = FormStartPosition.CenterParent;
+
+            if (dlg.ShowDialog(this) != DialogResult.OK)
+                return;
+
+            _character = dlg.Character;
         }
     }
 }
