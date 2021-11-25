@@ -15,6 +15,13 @@ namespace JonaDaniel.AdventureGame.WinHost
             InitializeComponent();
         }
 
+        protected override void OnLoad ( EventArgs e )
+        {
+            base.OnLoad(e);
+
+            UpdateUI();
+        }
+
         private Character _character;
         private void OnFileExit ( object sender, EventArgs e )
         {
@@ -38,6 +45,16 @@ namespace JonaDaniel.AdventureGame.WinHost
                 return;
 
             _character = dlg.Character;
+
+            UpdateUI();
+        }
+
+        private void UpdateUI ()
+        {
+            var bindingSource = new BindingSource();
+            bindingSource.DataSource = _character;
+
+            _listCharacters.DataSource = bindingSource;
         }
     }
 }
