@@ -17,5 +17,10 @@ namespace JonaDaniel.AdventureGame.WinHost
             InitializeComponent();
         }
 
+        private void OnFileExit ( object sender, EventArgs e )
+        {
+            //TODO: Confirm
+            Close();
+        }
     }
 }
