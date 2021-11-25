@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 
 namespace JonaDaniel.CharacterCreator
@@ -13,6 +12,7 @@ namespace JonaDaniel.CharacterCreator
     public class Character
     {
         public Character () => _attributes = LoadAttributes();
+
         #region String Properties
         /// <summary>
         /// Gets or sets Character Name
@@ -256,7 +256,5 @@ namespace JonaDaniel.CharacterCreator
             return false;
         }
         #endregion
-
-
     }
 }

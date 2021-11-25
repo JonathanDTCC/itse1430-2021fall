@@ -269,8 +269,6 @@ namespace JonaDaniel.CharacterCreator.ConsoleHost
             Console.WriteLine("Jonathan Daniel");
             Console.WriteLine("ITSE 1430 - Fall 2021");
             Console.WriteLine("".PadRight(15, '-'));
-
-            DisplayMenu();
         }
         /// <summary>
         /// Displays the Main Menu
