@@ -56,5 +56,24 @@ namespace JonaDaniel.AdventureGame.WinHost
 
             _listCharacters.DataSource = bindingSource;
         }
+
+        private void OnCharacterEdit ( object sender, EventArgs e )
+        {
+            var character = GetSelectedCharacter();
+            if (character == null)
+                return;
+
+            var dlg = new CharacterForm();
+            dlg.Character = character;
+
+            if (dlg.ShowDialog(this) != DialogResult.OK)
+                return;
+
+            _character = dlg.Character;
+
+            UpdateUI();
+        }
+
+        private Character GetSelectedCharacter () => _listCharacters.SelectedItem as Character;
     }
 }
