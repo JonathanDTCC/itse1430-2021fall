@@ -56,18 +56,18 @@ namespace JonaDaniel.AdventureGame.WinHost
                 return;
             };
 
-            //Build up a Character
-            var character = new Character();
-            character.Name = _txtName.Text;
-            character.Profession = _cbProfession.Text;
-            character.Race = _cbRace.Text;
-            character.Biography = _txtBiography.Text;
+            var character = new Character {
+                Name = _txtName.Text,
+                Profession = _cbProfession.Text,
+                Race = _cbRace.Text,
+                Biography = _txtBiography.Text,
 
-            character.Strength = GetInt32(_txtStrength);
-            character.Intelligence = GetInt32(_txtIntelligence);
-            character.Agility = GetInt32(_txtAgility);
-            character.Constitution = GetInt32(_txtConstitution);
-            character.Charisma = GetInt32(_txtCharisma);
+                Strength = GetInt32(_txtStrength),
+                Intelligence = GetInt32(_txtIntelligence),
+                Agility = GetInt32(_txtAgility),
+                Constitution = GetInt32(_txtConstitution),
+                Charisma = GetInt32(_txtCharisma)
+            };
 
             var error = character.Validate();
             if (!String.IsNullOrEmpty(error))
@@ -107,7 +107,7 @@ namespace JonaDaniel.AdventureGame.WinHost
             var control = sender as Control;
 
             var value = GetInt32(control);
-            if (value > Character.MinAttribute && value < Character.MaxAttribute)
+            if (value >= Character.MinAttribute && value <= Character.MaxAttribute)
             {
                 _errors.SetError(control, "");
                 return;
