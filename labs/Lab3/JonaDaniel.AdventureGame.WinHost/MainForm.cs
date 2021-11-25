@@ -22,5 +22,12 @@ namespace JonaDaniel.AdventureGame.WinHost
             //TODO: Confirm
             Close();
         }
+
+        private void OnHelpAbout ( object sender, EventArgs e )
+        {
+            var dlg = new AboutBox();
+
+            dlg.ShowDialog();
+        }
     }
 }
