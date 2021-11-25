@@ -24,7 +24,7 @@ namespace JonaDaniel.AdventureGame.WinHost
             if (Character != null)
                 LoadCharacter(Character);
 
-            //TODO: Validate
+            ValidateChildren();
         }
 
         /// <summary>Loads character information into form.</summary>
@@ -50,7 +50,11 @@ namespace JonaDaniel.AdventureGame.WinHost
         /// <param name="e"></param>
         private void OnSave ( object sender, EventArgs e )
         {
-            //TODO: Add Form Validation
+            if (!ValidateChildren())
+            {
+                DialogResult = DialogResult.None;
+                return;
+            };
 
             //Build up a Character
             var character = new Character();
@@ -77,6 +81,53 @@ namespace JonaDaniel.AdventureGame.WinHost
         }
 
         #region Validation and Error Display
+        #region Validation
+
+        private void RequiredElementValidation ( object sender, System.ComponentModel.CancelEventArgs e , string controlName )
+        {
+            var control = sender as Control;
+
+            if (control.Text.Length > 0)
+            {
+                _errors.SetError(control, "");
+                return;
+            }
+
+            _errors.SetError(control, $"{controlName} is required");
+            e.Cancel = true;
+        }
+        private void OnValidatingName ( object sender, System.ComponentModel.CancelEventArgs e ) => RequiredElementValidation(sender, e, "Name");
+        private void OnValidatingProfession ( object sender, System.ComponentModel.CancelEventArgs e ) => RequiredElementValidation(sender, e, "Profession");
+        private void OnValidatingRace ( object sender, System.ComponentModel.CancelEventArgs e ) => RequiredElementValidation(sender, e, "Race");
+
+        #region Attribute Validation
+
+        private void AttributeRangeValidation ( object sender, System.ComponentModel.CancelEventArgs e, string controlName )
+        {
+            var control = sender as Control;
+
+            var value = GetInt32(control);
+            if (value > Character.MinAttribute && value < Character.MaxAttribute)
+            {
+                _errors.SetError(control, "");
+                return;
+            }
+
+            _errors.SetError(control, $"{controlName} must be an integer between {Character.MinAttribute} and {Character.MaxAttribute}");
+            e.Cancel = true;
+        }
+        private void OnValidatingStrength ( object sender, System.ComponentModel.CancelEventArgs e ) => AttributeRangeValidation(sender, e, "Strength");
+
+        private void OnValidatingIntelligence ( object sender, System.ComponentModel.CancelEventArgs e ) => AttributeRangeValidation(sender, e, "Intelligence");
+
+        private void OnValidatingAgility ( object sender, System.ComponentModel.CancelEventArgs e ) => AttributeRangeValidation(sender, e, "Agility");
+
+        private void OnValidatingConstitution ( object sender, System.ComponentModel.CancelEventArgs e ) => AttributeRangeValidation(sender, e, "Constitution");
+
+        private void OnValidatingCharisma ( object sender, System.ComponentModel.CancelEventArgs e ) => AttributeRangeValidation(sender, e, "Charisma");
+        #endregion
+        #endregion
+
         /// <summary>Displays an error with the given message and title</summary>
         /// <param name="message"></param>
         /// <param name="title"></param>

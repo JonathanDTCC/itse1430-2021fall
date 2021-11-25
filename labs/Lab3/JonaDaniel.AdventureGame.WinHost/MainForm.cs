@@ -97,6 +97,11 @@ namespace JonaDaniel.AdventureGame.WinHost
                                                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                                                                 == DialogResult.Yes;
 
+        private void DisplayError( string message, string title )
+        {
+            MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
         #endregion
     }
 }

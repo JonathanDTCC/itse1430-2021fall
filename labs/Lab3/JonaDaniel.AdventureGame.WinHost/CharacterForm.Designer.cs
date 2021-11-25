@@ -29,6 +29,7 @@ namespace JonaDaniel.AdventureGame.WinHost
         /// </summary>
         private void InitializeComponent ()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -51,6 +52,8 @@ namespace JonaDaniel.AdventureGame.WinHost
             this._btnCancel = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this._errors = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this._errors)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -149,6 +152,7 @@ namespace JonaDaniel.AdventureGame.WinHost
             this._cbProfession.Name = "_cbProfession";
             this._cbProfession.Size = new System.Drawing.Size(121, 23);
             this._cbProfession.TabIndex = 1;
+            this._cbProfession.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidatingProfession);
             // 
             // _cbRace
             // 
@@ -164,6 +168,7 @@ namespace JonaDaniel.AdventureGame.WinHost
             this._cbRace.Name = "_cbRace";
             this._cbRace.Size = new System.Drawing.Size(121, 23);
             this._cbRace.TabIndex = 2;
+            this._cbRace.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidatingRace);
             // 
             // _txtName
             // 
@@ -171,6 +176,7 @@ namespace JonaDaniel.AdventureGame.WinHost
             this._txtName.Name = "_txtName";
             this._txtName.Size = new System.Drawing.Size(122, 23);
             this._txtName.TabIndex = 0;
+            this._txtName.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidatingName);
             // 
             // _txtStrength
             // 
@@ -179,6 +185,7 @@ namespace JonaDaniel.AdventureGame.WinHost
             this._txtStrength.Size = new System.Drawing.Size(60, 23);
             this._txtStrength.TabIndex = 3;
             this._txtStrength.Text = "50";
+            this._txtStrength.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidatingStrength);
             // 
             // _txtIntelligence
             // 
@@ -187,6 +194,7 @@ namespace JonaDaniel.AdventureGame.WinHost
             this._txtIntelligence.Size = new System.Drawing.Size(60, 23);
             this._txtIntelligence.TabIndex = 4;
             this._txtIntelligence.Text = "50";
+            this._txtIntelligence.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidatingIntelligence);
             // 
             // _txtAgility
             // 
@@ -195,6 +203,7 @@ namespace JonaDaniel.AdventureGame.WinHost
             this._txtAgility.Size = new System.Drawing.Size(60, 23);
             this._txtAgility.TabIndex = 5;
             this._txtAgility.Text = "50";
+            this._txtAgility.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidatingAgility);
             // 
             // _txtConstitution
             // 
@@ -203,6 +212,7 @@ namespace JonaDaniel.AdventureGame.WinHost
             this._txtConstitution.Size = new System.Drawing.Size(60, 23);
             this._txtConstitution.TabIndex = 6;
             this._txtConstitution.Text = "50";
+            this._txtConstitution.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidatingConstitution);
             // 
             // _txtCharisma
             // 
@@ -211,6 +221,7 @@ namespace JonaDaniel.AdventureGame.WinHost
             this._txtCharisma.Size = new System.Drawing.Size(60, 23);
             this._txtCharisma.TabIndex = 7;
             this._txtCharisma.Text = "50";
+            this._txtCharisma.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidatingCharisma);
             // 
             // _txtBiography
             // 
@@ -233,6 +244,7 @@ namespace JonaDaniel.AdventureGame.WinHost
             // 
             // _btnCancel
             // 
+            this._btnCancel.CausesValidation = false;
             this._btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this._btnCancel.Location = new System.Drawing.Point(345, 415);
             this._btnCancel.Name = "_btnCancel";
@@ -261,10 +273,16 @@ namespace JonaDaniel.AdventureGame.WinHost
             this.label11.TabIndex = 21;
             this.label11.Text = "Character Info";
             // 
+            // _errors
+            // 
+            this._errors.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this._errors.ContainerControl = this;
+            // 
             // CharacterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.ClientSize = new System.Drawing.Size(444, 461);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
@@ -294,6 +312,7 @@ namespace JonaDaniel.AdventureGame.WinHost
             this.Name = "CharacterForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Create New Character";
+            ((System.ComponentModel.ISupportInitialize)(this._errors)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -323,5 +342,6 @@ namespace JonaDaniel.AdventureGame.WinHost
         private System.Windows.Forms.Button _btnCancel;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ErrorProvider _errors;
     }
 }
