@@ -8,7 +8,9 @@ namespace JonaDaniel.AdventureGame.ConsoleHost
 {
     class Program
     {
-        static void Main(string[] args)
+        public static int currentRoom = 8;
+        private static int s_moveIndex = 0;
+        static void Main ( string[] args )
         {
             DisplayIntroduction();
 
@@ -18,16 +20,16 @@ namespace JonaDaniel.AdventureGame.ConsoleHost
             {
                 string command = GetInput();
 
-                switch(command)
+                switch (command)
                 {
                     case "quit": done = HandleQuit(); break;
                     case "help": HelpList(); break;
                     case "look": SearchArea(); break;
                     case "move":
-                    case "movenorth": MoveNorth(); break;
-                    case "movesouth": MoveSouth(); break;
-                    case "moveeast": MoveEast(); break;
-                    case "movewest": MoveWest(); break;
+                    case "movenorth": s_moveIndex = 0; MoveNorth(); break;
+                    case "moveeast": s_moveIndex = 1; MoveEast(); break;
+                    case "movesouth": s_moveIndex = 2; MoveSouth(); break;
+                    case "movewest": s_moveIndex = 3; MoveWest(); break;
                     default: DisplayError("Unknown option"); break;
                 };
             } while (!done);
@@ -54,7 +56,7 @@ namespace JonaDaniel.AdventureGame.ConsoleHost
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("");
-            Console.WriteLine("Move | MoveNorth | MoveSouth | Move East | Move West ::= Move in the indicated direction");
+            Console.WriteLine("Move | MoveNorth | MoveEast | MoveSouth | MoveWest ::= Move in the indicated direction");
             Console.WriteLine("Look | Search ::= Searches the current area");
             Console.WriteLine("Help ::= Get information about available commands");
             Console.WriteLine("Quit ::= Quit the program");
@@ -69,12 +71,13 @@ namespace JonaDaniel.AdventureGame.ConsoleHost
         #endregion
 
         #region Game Commands
-        static void SearchArea()
+        static void SearchArea ()
         {
             //TODO: Later
             Console.WriteLine("You search");
+            World();
         }
-        static void MoveNorth()
+        static void MoveNorth ()
         {
             Console.WriteLine("Move North");
         }
@@ -90,6 +93,193 @@ namespace JonaDaniel.AdventureGame.ConsoleHost
         {
             Console.WriteLine("Move West");
         }
+
+        #endregion
+
+        #region Game World
+        static void World ()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("");
+            Console.WriteLine("World");
+            Console.WriteLine("".PadRight(35, '='));
+            Console.ResetColor();
+
+            var empty = "".PadRight(11, ' ') + "|".PadRight(12, ' ') + "|".PadRight(11, ' ');
+            Console.WriteLine(empty);
+            Console.WriteLine("  Room 1   |  Room 2   |  Room 3  ");
+            Console.WriteLine("  Kitchen  |  Stairs   |  Closet  ");
+            Console.WriteLine(empty);
+            Console.WriteLine("".PadRight(35, '-'));
+            Console.WriteLine(empty);
+            Console.WriteLine("  Room 4   |  Room 5   |  Room 6  ");
+            Console.WriteLine("  Dining   |  Hallway  | Bathroom ");
+            Console.WriteLine(empty);
+            Console.WriteLine("".PadRight(35, '-'));
+            Console.WriteLine(empty);
+            Console.WriteLine("  Room 7   |  Room 8   |  Room 9  ");
+            Console.WriteLine(" Paintings | Entrance  |  Sitting ");
+            Console.WriteLine(empty);
+
+            //Basic Design
+
+            //Console.WriteLine(" Kitche | Upstai | Closet ");
+            //Console.WriteLine(" Room 1 | Room 2 | Room 3 ");
+            //Console.WriteLine(" Foods  | Notmuc | Clothe ");
+            //Console.WriteLine("".PadRight(26, '-'));
+            //Console.WriteLine(" Dining | Hallwa | Bathro ");
+            //Console.WriteLine(" Room 4 | Room 5 | Room 6 ");
+            //Console.WriteLine(" Fooods | Closet | Stuffs ");
+            //Console.WriteLine("".PadRight(26, '-'));
+            //Console.WriteLine(" Hallwa | Start  | Sit    ");
+            //Console.WriteLine(" Room 7 | Room 8 | Room 9 ");
+            //Console.WriteLine(" Paints | Front  | Chairs ");
+        }
+
+        #region rooms
+        static void Room1 ()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("");
+            Console.WriteLine("Room 1");
+            Console.WriteLine("".PadRight(35, '='));
+            Console.ResetColor();
+
+            Console.WriteLine("Room 1 is a Kitchen");
+            Console.WriteLine("Can move East to Room 2");
+            Console.WriteLine("Can move South to Room 4");
+        }
+
+        static void Room2 ()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("");
+            Console.WriteLine("Room 2");
+            Console.WriteLine("".PadRight(35, '='));
+            Console.ResetColor();
+
+            Console.WriteLine("Room 2 has a stairway");
+            //Console.WriteLine("Can move North to upstairs");
+            Console.WriteLine("Can't move North");
+            Console.WriteLine("Can move East to Room 3");
+            Console.WriteLine("Can move South to Room 5");
+            Console.WriteLine("Can move West to Room 1");
+
+            int[] move = { 2, 3, 5, 1 };
+            if (currentRoom == move[s_moveIndex])
+            {
+                DisplayError("Can't move that way right now");
+            }
+            currentRoom = move[s_moveIndex];
+        }
+
+        static void Room3 ()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("");
+            Console.WriteLine("Room 3");
+            Console.WriteLine("".PadRight(35, '='));
+            Console.ResetColor();
+
+            Console.WriteLine("Room 3 is a closet");
+            Console.WriteLine("Can't move North");
+            Console.WriteLine("Can't move East");
+            Console.WriteLine("Can move South to Room 6");
+            Console.WriteLine("Can move West to Room 2");
+
+        }
+
+        static void Room4 ()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("");
+            Console.WriteLine("Room 4");
+            Console.WriteLine("".PadRight(35, '='));
+            Console.ResetColor();
+
+            Console.WriteLine("Room 4 is a Dining Room");
+            Console.WriteLine("Can move North to Room 1");
+            Console.WriteLine("Can move East to Room 5");
+            Console.WriteLine("Can move South to Room 7");
+            Console.WriteLine("Can't move West");
+        }
+
+        static void Room5 ()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("");
+            Console.WriteLine("Room 5");
+            Console.WriteLine("".PadRight(35, '='));
+            Console.ResetColor();
+
+            Console.WriteLine("Room 5 is a Hallway");
+            Console.WriteLine("Can move North to Room 2");
+            Console.WriteLine("Can move East to Room 6");
+            Console.WriteLine("Can move South to Room 8");
+            Console.WriteLine("Can move West to Room 4");
+        }
+
+        static void Room6 ()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("");
+            Console.WriteLine("Room 6");
+            Console.WriteLine("".PadRight(35, '='));
+            Console.ResetColor();
+
+            Console.WriteLine("Room 6 is a Bathroom");
+            Console.WriteLine("Can move North to Room 3");
+            Console.WriteLine("Can't move East");
+            Console.WriteLine("Can move South to Room 9");
+            Console.WriteLine("Can move West to Room 5");
+        }
+
+        static void Room7 ()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("");
+            Console.WriteLine("Room 7");
+            Console.WriteLine("".PadRight(35, '='));
+            Console.ResetColor();
+
+            Console.WriteLine("Room 7 is a Painting Display Room");
+            Console.WriteLine("Can move North to Room 4");
+            Console.WriteLine("Can move East to Room 8");
+            Console.WriteLine("Can't move South");
+            Console.WriteLine("Can't move West");
+        }
+
+        static void Room8 ()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("");
+            Console.WriteLine("Room 8");
+            Console.WriteLine("".PadRight(35, '='));
+            Console.ResetColor();
+
+            Console.WriteLine("Room 8 is a Dining Room");
+            Console.WriteLine("Can move North to Room 5");
+            Console.WriteLine("Can move East to Room 9");
+            //Console.WriteLine("Can move South to Outside");
+            Console.WriteLine("Can't move South");
+            Console.WriteLine("Can move West to Room 7");
+        }
+
+        static void Room9 ()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("");
+            Console.WriteLine("Room 9");
+            Console.WriteLine("".PadRight(35, '='));
+            Console.ResetColor();
+
+            Console.WriteLine("Room 9 is a Living Room");
+            Console.WriteLine("Can move North to Room 6");
+            Console.WriteLine("Can't move East");
+            Console.WriteLine("Can't move South");
+            Console.WriteLine("Can move West to Room 8");
+        }
+        #endregion
 
         #endregion
 
@@ -110,8 +300,8 @@ namespace JonaDaniel.AdventureGame.ConsoleHost
                     return false;
             } while (true);
         }
-        static string GetInput()
-        {            
+        static string GetInput ()
+        {
             while (true)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -128,7 +318,7 @@ namespace JonaDaniel.AdventureGame.ConsoleHost
                     case "MOVESOUTH": return "movesouth";
                     case "MOVEEAST": return "moveeast";
                     case "MOVEWEST": return "movewest";
-                    case "SEARCH": 
+                    case "SEARCH":
                     case "LOOK": return "look";
                     case "HELP": return "help";
                     case "QUIT": return "quit";
