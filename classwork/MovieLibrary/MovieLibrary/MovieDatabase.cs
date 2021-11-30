@@ -88,7 +88,7 @@ namespace MovieLibrary
             UpdateCore(id, movie);
         }
 
-        protected abstract void UpdateCore ( int id, Movie Movie );
+        protected abstract void UpdateCore ( int id, Movie movie );
 
         protected abstract Movie FindById ( int id );
         protected abstract Movie FindByTitle ( string title );
