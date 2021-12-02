@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -111,6 +112,12 @@ namespace MovieLibrary.Memory
                 _items.Remove(movie);
         }
 
+        [Conditional("DEBUG")]
+        private void Dump ()
+        {
+        }
+
+        [Obsolete("Use GetCore instead")]
         private Movie FindById ( int id )
         {
             //Where (Func<Movie, bool>) -> IEnumerable<T>

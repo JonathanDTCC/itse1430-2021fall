@@ -10,7 +10,7 @@ namespace MovieLibrary
     // 3. Noun - because they represent an object/entity in your system
 
     /// <summary>Represents a movie.</summary>
-    public class Movie : IValidatableObject
+    public class Movie //: IValidatableObject
     {
         //Default constructor
         public Movie ()
@@ -47,6 +47,8 @@ namespace MovieLibrary
         //   Setter has a single parameter called `value` of property type
 
         /// <summary>Title</summary>
+        [RequiredAttribute(AllowEmptyStrings = false)]
+        [StringLength(255)]
         public string Title
         {
             //get { return _title ?? ""; }
@@ -93,6 +95,8 @@ namespace MovieLibrary
             set => _description = (value != null) ? value.Trim() : null;
         }
 
+        [Required(AllowEmptyStrings = false)]
+        [StringLength(20)]
         public string Rating
         {
             get { return (_rating != null) ? _rating : ""; }
@@ -106,6 +110,8 @@ namespace MovieLibrary
         //    set { _runLength = value; }
         //}
         //Auto property
+        [Range(0, 600, ErrorMessage = "Run Length cannot be longer than 10 hours")]
+        //[Display(Name = "Run Length")]
         public int RunLength { get; set; }
 
         //public int ReleaseYear
@@ -115,6 +121,8 @@ namespace MovieLibrary
         //}
         /// <summary>Gets or sets the release year.</summary>
         /// <value>MinimumReleaseYear</value>
+        [Range(1900, 2100)]
+        [Display(Name = "Release Year")]
         public int ReleaseYear { get; set; } = MinimumReleaseYear;
 
         //public double ReviewRating
@@ -212,30 +220,30 @@ namespace MovieLibrary
 
         /// <summary>Validates the object.</summary>
         /// <returns>The error, if any.</returns>
-        public IEnumerable<ValidationResult> Validate ( ValidationContext validationContext )
-        {
-            var errors = new List<ValidationResult>();
+        //public IEnumerable<ValidationResult> Validate ( ValidationContext validationContext )
+        //{
+        //    var errors = new List<ValidationResult>();
 
-            //Title is required
-            if (String.IsNullOrEmpty(Title)) // this.title            
-                //return "Title is required";
-                errors.Add(new ValidationResult("Title is required", new[] { nameof(Title) }));
+        //    ////Title is required
+        //    //if (String.IsNullOrEmpty(Title)) // this.title            
+        //    //    //return "Title is required";
+        //    //    errors.Add(new ValidationResult("Title is required", new[] { nameof(Title) }));
 
-            //Run length >= 0
-            //if (this.runLength < 0)
-            if (RunLength < 0)
-                errors.Add(new ValidationResult("Run Length must be at least zero", new[] { nameof(RunLength) }));
+        //    ////Run length >= 0
+        //    ////if (this.runLength < 0)
+        //    //if (RunLength < 0)
+        //    //    errors.Add(new ValidationResult("Run Length must be at least zero", new[] { nameof(RunLength) }));
 
-            //Release year >= 1900            
-            if (ReleaseYear < MinimumReleaseYear)
-                errors.Add(new ValidationResult("Release Year must be at least " + MinimumReleaseYear, new[] { nameof(ReleaseYear) }));
+        //    ////Release year >= 1900            
+        //    //if (ReleaseYear < MinimumReleaseYear)
+        //    //    errors.Add(new ValidationResult("Release Year must be at least " + MinimumReleaseYear, new[] { nameof(ReleaseYear) }));
 
-            //Rating is required
-            if (String.IsNullOrEmpty(Rating))
-                errors.Add(new ValidationResult("Rating is required", new[] { nameof(Rating) }));
+        //    ////Rating is required
+        //    //if (String.IsNullOrEmpty(Rating))
+        //    //    errors.Add(new ValidationResult("Rating is required", new[] { nameof(Rating) }));
 
-            return errors;
-        }
+        //    return errors;
+        //}
 
         private void SetDescriptionToTitle ()
         {
