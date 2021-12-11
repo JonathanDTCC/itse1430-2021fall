@@ -36,14 +36,21 @@ namespace JonaDaniel.AdventureGame.WinHost
             this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this._listCharacters = new System.Windows.Forms.ListBox();
-            this.gameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._groupArea = new System.Windows.Forms.GroupBox();
+            this._txtAreaDescription = new System.Windows.Forms.TextBox();
+            this._txtAreaName = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this._groupArea.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -71,7 +78,7 @@ namespace JonaDaniel.AdventureGame.WinHost
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.OnFileExit);
             // 
@@ -89,7 +96,7 @@ namespace JonaDaniel.AdventureGame.WinHost
             // 
             this.createToolStripMenuItem.Name = "createToolStripMenuItem";
             this.createToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.createToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.createToolStripMenuItem.Text = "&New";
             this.createToolStripMenuItem.Click += new System.EventHandler(this.OnCharacterNew);
             // 
@@ -97,7 +104,7 @@ namespace JonaDaniel.AdventureGame.WinHost
             // 
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.editToolStripMenuItem.Text = "&Edit";
             this.editToolStripMenuItem.Click += new System.EventHandler(this.OnCharacterEdit);
             // 
@@ -105,9 +112,24 @@ namespace JonaDaniel.AdventureGame.WinHost
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             this.deleteToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.deleteToolStripMenuItem.Text = "&Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.OnCharacterDelete);
+            // 
+            // gameToolStripMenuItem
+            // 
+            this.gameToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startToolStripMenuItem});
+            this.gameToolStripMenuItem.Name = "gameToolStripMenuItem";
+            this.gameToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
+            this.gameToolStripMenuItem.Text = "&Game";
+            // 
+            // startToolStripMenuItem
+            // 
+            this.startToolStripMenuItem.Name = "startToolStripMenuItem";
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.startToolStripMenuItem.Text = "Start";
+            this.startToolStripMenuItem.Click += new System.EventHandler(this.OnGameStart);
             // 
             // helpToolStripMenuItem
             // 
@@ -121,7 +143,7 @@ namespace JonaDaniel.AdventureGame.WinHost
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.OnHelpAbout);
             // 
@@ -131,6 +153,7 @@ namespace JonaDaniel.AdventureGame.WinHost
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
             this.tableLayoutPanel1.Controls.Add(this._listCharacters, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this._groupArea, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -151,20 +174,65 @@ namespace JonaDaniel.AdventureGame.WinHost
             this._listCharacters.Size = new System.Drawing.Size(778, 173);
             this._listCharacters.TabIndex = 0;
             // 
-            // gameToolStripMenuItem
+            // _groupArea
             // 
-            this.gameToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.startToolStripMenuItem});
-            this.gameToolStripMenuItem.Name = "gameToolStripMenuItem";
-            this.gameToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
-            this.gameToolStripMenuItem.Text = "&Game";
+            this._groupArea.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this._groupArea.Controls.Add(this._txtAreaDescription);
+            this._groupArea.Controls.Add(this._txtAreaName);
+            this._groupArea.Controls.Add(this.label3);
+            this._groupArea.Controls.Add(this.label2);
+            this._groupArea.Controls.Add(this.label1);
+            this._groupArea.Enabled = false;
+            this._groupArea.Location = new System.Drawing.Point(3, 29);
+            this._groupArea.Name = "_groupArea";
+            this._groupArea.Size = new System.Drawing.Size(307, 300);
+            this._groupArea.TabIndex = 1;
+            this._groupArea.TabStop = false;
             // 
-            // startToolStripMenuItem
+            // _txtAreaDescription
             // 
-            this.startToolStripMenuItem.Name = "startToolStripMenuItem";
-            this.startToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.startToolStripMenuItem.Text = "Start";
-            this.startToolStripMenuItem.Click += new System.EventHandler(this.OnGameStart);
+            this._txtAreaDescription.Location = new System.Drawing.Point(83, 94);
+            this._txtAreaDescription.Multiline = true;
+            this._txtAreaDescription.Name = "_txtAreaDescription";
+            this._txtAreaDescription.ReadOnly = true;
+            this._txtAreaDescription.Size = new System.Drawing.Size(181, 51);
+            this._txtAreaDescription.TabIndex = 4;
+            // 
+            // _txtAreaName
+            // 
+            this._txtAreaName.Location = new System.Drawing.Point(83, 64);
+            this._txtAreaName.Name = "_txtAreaName";
+            this._txtAreaName.ReadOnly = true;
+            this._txtAreaName.Size = new System.Drawing.Size(135, 23);
+            this._txtAreaName.TabIndex = 3;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(10, 94);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(67, 15);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Description";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(10, 64);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(39, 15);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Name";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(71, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(147, 37);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Area View";
             // 
             // MainForm
             // 
@@ -180,6 +248,8 @@ namespace JonaDaniel.AdventureGame.WinHost
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
+            this._groupArea.ResumeLayout(false);
+            this._groupArea.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -200,6 +270,12 @@ namespace JonaDaniel.AdventureGame.WinHost
         private System.Windows.Forms.ListBox _listCharacters;
         private System.Windows.Forms.ToolStripMenuItem gameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
+        private System.Windows.Forms.GroupBox _groupArea;
+        private System.Windows.Forms.TextBox _txtAreaDescription;
+        private System.Windows.Forms.TextBox _txtAreaName;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
     }
 }
 

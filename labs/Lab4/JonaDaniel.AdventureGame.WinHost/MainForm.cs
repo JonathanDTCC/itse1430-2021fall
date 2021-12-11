@@ -127,6 +127,15 @@ namespace JonaDaniel.AdventureGame.WinHost
                 CurrentCharacter = GetSelectedCharacter(),
                 CurrentPosition = GameWorld.StartArea
             };
+
+            _groupArea.Enabled = true;
+            UpdateArea();
+        }
+
+        private void UpdateArea ()
+        {
+            _txtAreaName.Text = _player.CurrentPosition.Name;
+            _txtAreaDescription.Text = _player.CurrentPosition.Description;
         }
 
         private void DisableCharacterMenu ()
