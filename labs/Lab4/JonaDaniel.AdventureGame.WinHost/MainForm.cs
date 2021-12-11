@@ -22,7 +22,9 @@ namespace JonaDaniel.AdventureGame.WinHost
             UpdateUI();
         }
 
-        private Character _character;   
+        private Character _character;
+        private Player _player;
+        private GameWorld _gameWorld;
         private Character GetSelectedCharacter () => _listCharacters.SelectedItem as Character;
 
         #region Exit and About Buttons
@@ -102,6 +104,46 @@ namespace JonaDaniel.AdventureGame.WinHost
             MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
+        #endregion
+
+        #region Game
+        private void OnGameStart ( object sender, EventArgs e )
+        {
+            if (_listCharacters.Items.Count == 0)
+            {
+                DisplayError("Please Create a Character First", "Can't Start");
+                return;
+            }
+            DisableCharacterMenu();
+
+            StartGame();
+        }
+
+        private void StartGame ()
+        {
+            _gameWorld = new GameWorld();
+
+            _player = new Player() {
+                CurrentCharacter = GetSelectedCharacter(),
+                CurrentPosition = GameWorld.StartArea
+            };
+        }
+
+        private void DisableCharacterMenu ()
+        {
+            characterToolStripMenuItem.Enabled = false;
+            createToolStripMenuItem.Enabled = false;
+            editToolStripMenuItem.Enabled = false;
+            deleteToolStripMenuItem.Enabled = false;
+        }
+
+        private void EnableCharacterMenu ()
+        {
+            characterToolStripMenuItem.Enabled = true;
+            createToolStripMenuItem.Enabled = true;
+            editToolStripMenuItem.Enabled = true;
+            deleteToolStripMenuItem.Enabled = true;
+        }
         #endregion
     }
 }

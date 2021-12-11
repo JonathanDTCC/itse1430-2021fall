@@ -15,7 +15,7 @@ namespace JonaDaniel.AdventureGame
     {
         private string _name;
         private string _description;
-        private List<int> _accessibleAreas;
+        private List<int> _accessibleAreas = new();
 
         /// <summary>Gets or sets the name.</summary>
         /// <value>Never returns null.</value>
