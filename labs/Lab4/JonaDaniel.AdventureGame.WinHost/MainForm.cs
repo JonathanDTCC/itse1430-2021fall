@@ -124,7 +124,8 @@ namespace JonaDaniel.AdventureGame.WinHost
 
             _player = new Player() {
                 CurrentCharacter = GetSelectedCharacter(),
-                CurrentPosition = _gameWorld.StartingArea
+                CurrentPosition = _gameWorld.StartingArea,
+                Inventory = new Inventory(),
             };
 
             _groupArea.Enabled = true;

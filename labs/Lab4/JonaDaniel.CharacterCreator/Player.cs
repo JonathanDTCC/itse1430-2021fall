@@ -15,6 +15,7 @@ namespace JonaDaniel.AdventureGame
     {
         private Character _character;
         private Area _currentPosition;
+        private Inventory _inventory;
 
         /// <summary>Gets or sets the players current character.</summary>
         public Character CurrentCharacter
@@ -28,6 +29,12 @@ namespace JonaDaniel.AdventureGame
         {
             get => _currentPosition ?? GameWorld.StartArea;
             set => _currentPosition = value;
+        }
+
+        public Inventory Inventory
+        {
+            get => _inventory ?? new Inventory();
+            set => _inventory = value;
         }
     }
 }
