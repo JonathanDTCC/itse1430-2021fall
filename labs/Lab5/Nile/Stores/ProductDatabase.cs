@@ -3,6 +3,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Nile.Stores
 {
@@ -21,13 +22,15 @@ namespace Nile.Stores
             // Validate product
             ObjectValidator.Validate(product);
 
-            var existing = GetCore(product.Id);
+            var existing = FindByName(product.Name);
             if (existing != null)
                 throw new Exception("Product must be unique");
 
             //Emulate database by storing copy
             return AddCore(product);
         }
+
+        private Product FindByName ( string name ) => GetAllCore().FirstOrDefault(product => String.Compare(name, product.Name, true) == 0);
 
         /// <summary>Get a specific product.</summary>
         /// <returns>The product, if it exists.</returns>
@@ -75,7 +78,7 @@ namespace Nile.Stores
             if (existing == null)
                 throw new Exception("Product not found");
 
-            var dup = GetCore(1); //product.Name
+            var dup = FindByName(product.Name); //product.Name
             if (dup != null && dup.Id != product.Id)
                 throw new InvalidOperationException("Product must be unique");
 
