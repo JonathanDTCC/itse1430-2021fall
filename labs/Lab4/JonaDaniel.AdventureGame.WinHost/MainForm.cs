@@ -169,6 +169,8 @@ namespace JonaDaniel.AdventureGame.WinHost
             _btnEast.Enabled = _player.CurrentPosition.AccessibleAreas[1] != 0;
             _btnSouth.Enabled = _player.CurrentPosition.AccessibleAreas[2] != 0;
             _btnWest.Enabled = _player.CurrentPosition.AccessibleAreas[3] != 0;
+
+            _btnPickup.Enabled = _player.CurrentPosition.Item != null;
         }
 
         private void DisableCharacterMenu ()
@@ -213,5 +215,23 @@ namespace JonaDaniel.AdventureGame.WinHost
             UpdateArea();
         }
         #endregion
+
+        private void OnPickup ( object sender, EventArgs e )
+        {
+            if (_player.CurrentPosition.Item == null)
+                return;
+
+            Item newItem = new Item() {
+                Name = _player.CurrentPosition.Item.Name,
+                Weight = _player.CurrentPosition.Item.Weight,
+                Value = _player.CurrentPosition.Item.Value,
+            };
+
+            _player.Inventory.AddItem(newItem);
+
+            _player.CurrentPosition.Item = null;
+
+            UpdateArea();
+        }
     }
 }

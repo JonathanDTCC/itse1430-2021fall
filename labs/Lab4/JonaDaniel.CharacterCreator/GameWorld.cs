@@ -34,7 +34,8 @@ namespace JonaDaniel.AdventureGame
                 Name = "Kitchen",
                 Description = "A kitchen for making food",
                 Id = 1,
-                AccessibleAreas = new List<int>() { 0, 2, 4, 0 }
+                AccessibleAreas = new List<int>() { 0, 2, 4, 0 },
+                Item = new Item() { Name = "Banana", Weight = 0.3, Value = 4 }
             });
 
             _areas.Add(new Area {
@@ -62,7 +63,8 @@ namespace JonaDaniel.AdventureGame
                 Name = "Hallway",
                 Description = "Hallway leading to other rooms",
                 Id = 5,
-                AccessibleAreas = new List<int>() { 2, 6, 4, 8 }
+                AccessibleAreas = new List<int>() { 2, 6, 4, 8 },
+                Item = new Item() { Name = "Shoes", Weight = 2.3, Value = 23 }
             });
 
             _areas.Add(new Area {
@@ -76,7 +78,8 @@ namespace JonaDaniel.AdventureGame
                 Name = "Hallway",
                 Description = "Hallway with window to see outside",
                 Id = 7,
-                AccessibleAreas = new List<int>() { 4, 8, 0, 0 }
+                AccessibleAreas = new List<int>() { 4, 8, 0, 0 },
+                Item = new Item() { Name = "Painting", Weight = 16.2, Value = 128 }
             });
 
             _areas.Add(new Area {

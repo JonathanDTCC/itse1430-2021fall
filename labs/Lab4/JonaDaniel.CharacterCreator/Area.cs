@@ -16,6 +16,7 @@ namespace JonaDaniel.AdventureGame
         private string _name;
         private string _description;
         private List<int> _accessibleAreas;
+        private Item _item;
 
         /// <summary>Gets or sets the name.</summary>
         /// <value>Never returns null.</value>
@@ -28,12 +29,20 @@ namespace JonaDaniel.AdventureGame
         /// <summary>Gets or sets the description.</summary>
         public string Description
         {
-            get => _description ?? "";
+            get => (_description  ?? "") + ItemText();
             set => _description = value?.Trim();
         }
 
+        private string ItemText () => (Item == null) ? "" : "   !An item is available!";
+
         /// <summary>Gets or sets the unique identifier.</summary>
         public int Id { get; set; }
+
+        public Item Item
+        {
+            get => _item;
+            set => _item = value;
+        }
 
         /// <summary>Gets or sets the areas accesible from this area.</summary>
         public List<int> AccessibleAreas 
