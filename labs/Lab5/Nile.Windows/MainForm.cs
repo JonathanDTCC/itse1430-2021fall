@@ -46,10 +46,16 @@ namespace Nile.Windows
             if (child.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            //TODO: Handle errors
-            //Save product
-            _database.Add(child.Product);
-            UpdateList();
+            // Handle errors
+            try
+            {
+                //Save product
+                _database.Add(child.Product);
+                UpdateList();
+            } catch (Exception ex)
+            {
+                DisplayError(ex.Message, "Add Failed");
+            }
         }
 
         private void OnProductEdit( object sender, EventArgs e )
@@ -105,6 +111,11 @@ namespace Nile.Windows
 
         #region Private Members
 
+        private void DisplayError ( string message, string title )
+        {
+            MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
         private void DeleteProduct ( Product product )
         {
             //Confirm
@@ -112,10 +123,16 @@ namespace Nile.Windows
                                 "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 return;
 
-            //TODO: Handle errors
-            //Delete product
-            _database.Remove(product.Id);
-            UpdateList();
+            // Handle errors
+            try
+            {
+                //Delete product
+                _database.Remove(product.Id);
+                UpdateList();
+            } catch (Exception ex)
+            {
+                DisplayError(ex.Message, "Delete Failed");
+            }
         }
 
         private void EditProduct ( Product product )
@@ -125,10 +142,16 @@ namespace Nile.Windows
             if (child.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            //TODO: Handle errors
-            //Save product
-            _database.Update(child.Product);
-            UpdateList();
+            // Handle errors
+            try
+            {
+                //Save product
+                _database.Update(child.Product);
+                UpdateList();
+            } catch (Exception ex)
+            {
+                DisplayError(ex.Message, "Edit Failed");
+            }
         }
 
         private Product GetSelectedProduct ()
@@ -141,9 +164,14 @@ namespace Nile.Windows
 
         private void UpdateList ()
         {
-            //TODO: Handle errors
-
-            _bsProducts.DataSource = _database.GetAll();
+            // Handle errors
+            try
+            {
+                _bsProducts.DataSource = _database.GetAll();
+            } catch (Exception ex)
+            {
+                DisplayError(ex.Message, "UpdateList Failed");
+            }
         }
 
         private string GetConnectionString ( string name )
