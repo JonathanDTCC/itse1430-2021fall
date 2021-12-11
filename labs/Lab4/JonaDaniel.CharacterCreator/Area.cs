@@ -15,7 +15,7 @@ namespace JonaDaniel.AdventureGame
     {
         private string _name;
         private string _description;
-        private List<int> _accessibleAreas = new();
+        private List<int> _accessibleAreas;
 
         /// <summary>Gets or sets the name.</summary>
         /// <value>Never returns null.</value>
@@ -38,15 +38,15 @@ namespace JonaDaniel.AdventureGame
         /// <summary>Gets or sets the areas accesible from this area.</summary>
         public List<int> AccessibleAreas 
         {
-            get => CopyAreas();
-            set => _accessibleAreas = value;
+            get => (_accessibleAreas != null) ? CopyAreas(_accessibleAreas) : new List<int> { 0, 0, 0, 0 };
+            set => _accessibleAreas = (value != null) ? CopyAreas(value) : null;
         }
 
         /// <summary>Returns a copy of the accessible areas.</summary>
-        private List<int> CopyAreas ()
+        private List<int> CopyAreas (List<int> toCopy)
         {
             var copy = new List<int>();
-            foreach (var v in _accessibleAreas)
+            foreach (var v in toCopy)
                 copy.Add(v);
             return copy;
         }

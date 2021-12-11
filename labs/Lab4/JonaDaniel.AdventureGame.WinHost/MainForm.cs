@@ -10,7 +10,7 @@ namespace JonaDaniel.AdventureGame.WinHost
 {
     public partial class MainForm : Form
     {
-        public MainForm()
+        public MainForm ()
         {
             InitializeComponent();
         }
@@ -99,7 +99,7 @@ namespace JonaDaniel.AdventureGame.WinHost
                                                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                                                                 == DialogResult.Yes;
 
-        private void DisplayError( string message, string title )
+        private void DisplayError ( string message, string title )
         {
             MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
@@ -118,24 +118,56 @@ namespace JonaDaniel.AdventureGame.WinHost
 
             StartGame();
         }
-
         private void StartGame ()
         {
             _gameWorld = new GameWorld();
 
             _player = new Player() {
                 CurrentCharacter = GetSelectedCharacter(),
-                CurrentPosition = GameWorld.StartArea
+                CurrentPosition = _gameWorld.StartingArea
             };
 
             _groupArea.Enabled = true;
+            _groupMove.Enabled = true;
+
+            startToolStripMenuItem.Enabled = false;
+            endToolStripMenuItem.Enabled = true;
             UpdateArea();
         }
+        private void OnGameEnd ( object sender, EventArgs e )
+        {
+            EnableCharacterMenu();
+
+            EndGame();
+        }
+
+        private void EndGame ()
+        {
+            _txtAreaName.Text = "";
+            _txtAreaDescription.Text = "";
+
+            _gameWorld = null;
+
+            _player = null;
+
+            _groupArea.Enabled = false;
+            _groupMove.Enabled = false;
+
+            startToolStripMenuItem.Enabled = true;
+            endToolStripMenuItem.Enabled = false;
+        }
+
+
 
         private void UpdateArea ()
         {
             _txtAreaName.Text = _player.CurrentPosition.Name;
             _txtAreaDescription.Text = _player.CurrentPosition.Description;
+
+            _btnNorth.Enabled = _player.CurrentPosition.AccessibleAreas[0] != 0;
+            _btnEast.Enabled = _player.CurrentPosition.AccessibleAreas[1] != 0;
+            _btnSouth.Enabled = _player.CurrentPosition.AccessibleAreas[2] != 0;
+            _btnWest.Enabled = _player.CurrentPosition.AccessibleAreas[3] != 0;
         }
 
         private void DisableCharacterMenu ()
@@ -152,6 +184,32 @@ namespace JonaDaniel.AdventureGame.WinHost
             createToolStripMenuItem.Enabled = true;
             editToolStripMenuItem.Enabled = true;
             deleteToolStripMenuItem.Enabled = true;
+        }
+        #endregion
+
+        #region Move
+        private void OnMoveNorth ( object sender, EventArgs e )
+        {
+            _player.CurrentPosition = _gameWorld.FindArea(_player.CurrentPosition.AccessibleAreas[0]);
+            UpdateArea();
+        }
+
+        private void OnMoveEast ( object sender, EventArgs e )
+        {
+            _player.CurrentPosition = _gameWorld.FindArea(_player.CurrentPosition.AccessibleAreas[1]);
+            UpdateArea();
+        }
+
+        private void OnMoveSouth ( object sender, EventArgs e )
+        {
+            _player.CurrentPosition = _gameWorld.FindArea(_player.CurrentPosition.AccessibleAreas[2]);
+            UpdateArea();
+        }
+
+        private void OnMoveWest ( object sender, EventArgs e )
+        {
+            _player.CurrentPosition = _gameWorld.FindArea(_player.CurrentPosition.AccessibleAreas[3]);
+            UpdateArea();
         }
         #endregion
     }

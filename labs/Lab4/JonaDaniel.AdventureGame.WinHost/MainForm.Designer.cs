@@ -48,9 +48,17 @@ namespace JonaDaniel.AdventureGame.WinHost
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this._groupMove = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this._btnNorth = new System.Windows.Forms.Button();
+            this._btnEast = new System.Windows.Forms.Button();
+            this._btnSouth = new System.Windows.Forms.Button();
+            this._btnWest = new System.Windows.Forms.Button();
+            this.endToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this._groupArea.SuspendLayout();
+            this._groupMove.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -119,7 +127,8 @@ namespace JonaDaniel.AdventureGame.WinHost
             // gameToolStripMenuItem
             // 
             this.gameToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.startToolStripMenuItem});
+            this.startToolStripMenuItem,
+            this.endToolStripMenuItem});
             this.gameToolStripMenuItem.Name = "gameToolStripMenuItem";
             this.gameToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
             this.gameToolStripMenuItem.Text = "&Game";
@@ -127,7 +136,7 @@ namespace JonaDaniel.AdventureGame.WinHost
             // startToolStripMenuItem
             // 
             this.startToolStripMenuItem.Name = "startToolStripMenuItem";
-            this.startToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.startToolStripMenuItem.Text = "Start";
             this.startToolStripMenuItem.Click += new System.EventHandler(this.OnGameStart);
             // 
@@ -154,6 +163,7 @@ namespace JonaDaniel.AdventureGame.WinHost
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
             this.tableLayoutPanel1.Controls.Add(this._listCharacters, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this._groupArea, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this._groupMove, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -234,6 +244,83 @@ namespace JonaDaniel.AdventureGame.WinHost
             this.label1.TabIndex = 0;
             this.label1.Text = "Area View";
             // 
+            // _groupMove
+            // 
+            this._groupMove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this._groupMove.Controls.Add(this.label4);
+            this._groupMove.Controls.Add(this._btnNorth);
+            this._groupMove.Controls.Add(this._btnEast);
+            this._groupMove.Controls.Add(this._btnSouth);
+            this._groupMove.Controls.Add(this._btnWest);
+            this._groupMove.Enabled = false;
+            this._groupMove.Location = new System.Drawing.Point(316, 182);
+            this._groupMove.Name = "_groupMove";
+            this._groupMove.Size = new System.Drawing.Size(288, 173);
+            this._groupMove.TabIndex = 2;
+            this._groupMove.TabStop = false;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Segoe UI", 14F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point);
+            this.label4.Location = new System.Drawing.Point(12, 19);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(62, 25);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "Move";
+            // 
+            // _btnNorth
+            // 
+            this._btnNorth.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this._btnNorth.Location = new System.Drawing.Point(104, 53);
+            this._btnNorth.Name = "_btnNorth";
+            this._btnNorth.Size = new System.Drawing.Size(86, 44);
+            this._btnNorth.TabIndex = 3;
+            this._btnNorth.Text = "North";
+            this._btnNorth.UseVisualStyleBackColor = true;
+            this._btnNorth.Click += new System.EventHandler(this.OnMoveNorth);
+            // 
+            // _btnEast
+            // 
+            this._btnEast.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this._btnEast.Location = new System.Drawing.Point(196, 103);
+            this._btnEast.Name = "_btnEast";
+            this._btnEast.Size = new System.Drawing.Size(86, 44);
+            this._btnEast.TabIndex = 2;
+            this._btnEast.Text = "East";
+            this._btnEast.UseVisualStyleBackColor = true;
+            this._btnEast.Click += new System.EventHandler(this.OnMoveEast);
+            // 
+            // _btnSouth
+            // 
+            this._btnSouth.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this._btnSouth.Location = new System.Drawing.Point(104, 103);
+            this._btnSouth.Name = "_btnSouth";
+            this._btnSouth.Size = new System.Drawing.Size(86, 44);
+            this._btnSouth.TabIndex = 1;
+            this._btnSouth.Text = "South";
+            this._btnSouth.UseVisualStyleBackColor = true;
+            this._btnSouth.Click += new System.EventHandler(this.OnMoveSouth);
+            // 
+            // _btnWest
+            // 
+            this._btnWest.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this._btnWest.Location = new System.Drawing.Point(12, 103);
+            this._btnWest.Name = "_btnWest";
+            this._btnWest.Size = new System.Drawing.Size(86, 44);
+            this._btnWest.TabIndex = 0;
+            this._btnWest.Text = "West";
+            this._btnWest.UseVisualStyleBackColor = true;
+            this._btnWest.Click += new System.EventHandler(this.OnMoveWest);
+            // 
+            // endToolStripMenuItem
+            // 
+            this.endToolStripMenuItem.Enabled = false;
+            this.endToolStripMenuItem.Name = "endToolStripMenuItem";
+            this.endToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.endToolStripMenuItem.Text = "End";
+            this.endToolStripMenuItem.Click += new System.EventHandler(this.OnGameEnd);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -250,6 +337,8 @@ namespace JonaDaniel.AdventureGame.WinHost
             this.tableLayoutPanel1.ResumeLayout(false);
             this._groupArea.ResumeLayout(false);
             this._groupArea.PerformLayout();
+            this._groupMove.ResumeLayout(false);
+            this._groupMove.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -276,6 +365,13 @@ namespace JonaDaniel.AdventureGame.WinHost
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox _groupMove;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button _btnNorth;
+        private System.Windows.Forms.Button _btnEast;
+        private System.Windows.Forms.Button _btnSouth;
+        private System.Windows.Forms.Button _btnWest;
+        private System.Windows.Forms.ToolStripMenuItem endToolStripMenuItem;
     }
 }
 

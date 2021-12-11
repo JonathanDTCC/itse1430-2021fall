@@ -27,7 +27,7 @@ namespace JonaDaniel.AdventureGame
         public Area CurrentPosition
         {
             get => _currentPosition ?? GameWorld.StartArea;
-            set => _currentPosition = value ?? null;
+            set => _currentPosition = value;
         }
     }
 }
