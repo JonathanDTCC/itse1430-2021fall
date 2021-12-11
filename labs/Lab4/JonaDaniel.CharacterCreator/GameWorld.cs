@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*
+ * Jonathan Daniel
+ * ITSE 1430 Fall 2021
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +13,7 @@ namespace JonaDaniel.AdventureGame
     public class GameWorld : World
     {
         private List<Area> _areas = new List<Area>();
-        private Area _start = new Area {
+        public static Area StartArea = new Area {
             Name = "Entrance",
             Description = "Entrance to the house",
             Id = 8,
