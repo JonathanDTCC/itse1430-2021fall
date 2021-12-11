@@ -33,6 +33,13 @@ namespace Nile.Windows
             Close();
         }
 
+        private void OnHelpAbout( object sender, EventArgs e )
+        {
+            var dlg = new AboutBox();
+
+            dlg.ShowDialog();
+        }
+
         private void OnProductAdd( object sender, EventArgs e )
         {
             var child = new ProductDetailForm("Product Details");
