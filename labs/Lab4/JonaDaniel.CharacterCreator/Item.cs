@@ -27,5 +27,7 @@ namespace JonaDaniel.AdventureGame
 
         /// <summary>Get or set weight of item in pounds</summary>
         public double Weight { get; set; } = 0;
+
+        public override string ToString () => $"{Name} : ({Weight} - Pounds) [{Value} - Coins)";
     }
 }

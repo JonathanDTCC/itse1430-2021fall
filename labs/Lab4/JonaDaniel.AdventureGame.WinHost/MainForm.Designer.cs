@@ -44,25 +44,33 @@ namespace JonaDaniel.AdventureGame.WinHost
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this._listCharacters = new System.Windows.Forms.ListBox();
             this._groupArea = new System.Windows.Forms.GroupBox();
+            this._groupInventory = new System.Windows.Forms.GroupBox();
+            this._listInventory = new System.Windows.Forms.ListBox();
+            this.label6 = new System.Windows.Forms.Label();
             this._txtAreaDescription = new System.Windows.Forms.TextBox();
             this._txtAreaName = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this._groupMove = new System.Windows.Forms.GroupBox();
+            this._groupInteract = new System.Windows.Forms.GroupBox();
+            this._btnInvClose = new System.Windows.Forms.Button();
+            this._btnInvOpen = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this._btnPickup = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this._btnNorth = new System.Windows.Forms.Button();
             this._btnEast = new System.Windows.Forms.Button();
             this._btnSouth = new System.Windows.Forms.Button();
             this._btnWest = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this._btnPickup = new System.Windows.Forms.Button();
+            this._lblTotalWeight = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this._groupArea.SuspendLayout();
+            this._groupInventory.SuspendLayout();
             this._groupMove.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this._groupInteract.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -199,6 +207,7 @@ namespace JonaDaniel.AdventureGame.WinHost
             // _groupArea
             // 
             this._groupArea.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this._groupArea.Controls.Add(this._groupInventory);
             this._groupArea.Controls.Add(this._txtAreaDescription);
             this._groupArea.Controls.Add(this._txtAreaName);
             this._groupArea.Controls.Add(this.label3);
@@ -210,6 +219,37 @@ namespace JonaDaniel.AdventureGame.WinHost
             this._groupArea.Size = new System.Drawing.Size(307, 300);
             this._groupArea.TabIndex = 1;
             this._groupArea.TabStop = false;
+            // 
+            // _groupInventory
+            // 
+            this._groupInventory.Controls.Add(this._lblTotalWeight);
+            this._groupInventory.Controls.Add(this._listInventory);
+            this._groupInventory.Controls.Add(this.label6);
+            this._groupInventory.Location = new System.Drawing.Point(0, 151);
+            this._groupInventory.Name = "_groupInventory";
+            this._groupInventory.Size = new System.Drawing.Size(307, 169);
+            this._groupInventory.TabIndex = 5;
+            this._groupInventory.TabStop = false;
+            this._groupInventory.Visible = false;
+            // 
+            // _listInventory
+            // 
+            this._listInventory.FormattingEnabled = true;
+            this._listInventory.ItemHeight = 15;
+            this._listInventory.Location = new System.Drawing.Point(7, 54);
+            this._listInventory.Name = "_listInventory";
+            this._listInventory.Size = new System.Drawing.Size(294, 94);
+            this._listInventory.TabIndex = 1;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label6.Location = new System.Drawing.Point(9, 5);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(165, 45);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Inventory";
             // 
             // _txtAreaDescription
             // 
@@ -259,7 +299,7 @@ namespace JonaDaniel.AdventureGame.WinHost
             // _groupMove
             // 
             this._groupMove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this._groupMove.Controls.Add(this.groupBox1);
+            this._groupMove.Controls.Add(this._groupInteract);
             this._groupMove.Controls.Add(this.label4);
             this._groupMove.Controls.Add(this._btnNorth);
             this._groupMove.Controls.Add(this._btnEast);
@@ -271,6 +311,73 @@ namespace JonaDaniel.AdventureGame.WinHost
             this._groupMove.Size = new System.Drawing.Size(465, 173);
             this._groupMove.TabIndex = 2;
             this._groupMove.TabStop = false;
+            // 
+            // _groupInteract
+            // 
+            this._groupInteract.Controls.Add(this._btnInvClose);
+            this._groupInteract.Controls.Add(this._btnInvOpen);
+            this._groupInteract.Controls.Add(this.label7);
+            this._groupInteract.Controls.Add(this._btnPickup);
+            this._groupInteract.Controls.Add(this.label5);
+            this._groupInteract.Location = new System.Drawing.Point(288, 0);
+            this._groupInteract.Name = "_groupInteract";
+            this._groupInteract.Size = new System.Drawing.Size(177, 173);
+            this._groupInteract.TabIndex = 5;
+            this._groupInteract.TabStop = false;
+            // 
+            // _btnInvClose
+            // 
+            this._btnInvClose.Enabled = false;
+            this._btnInvClose.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this._btnInvClose.Location = new System.Drawing.Point(71, 128);
+            this._btnInvClose.Name = "_btnInvClose";
+            this._btnInvClose.Size = new System.Drawing.Size(59, 39);
+            this._btnInvClose.TabIndex = 9;
+            this._btnInvClose.Text = "Close";
+            this._btnInvClose.UseVisualStyleBackColor = true;
+            this._btnInvClose.Click += new System.EventHandler(this.OnInvClose);
+            // 
+            // _btnInvOpen
+            // 
+            this._btnInvOpen.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this._btnInvOpen.Location = new System.Drawing.Point(6, 128);
+            this._btnInvOpen.Name = "_btnInvOpen";
+            this._btnInvOpen.Size = new System.Drawing.Size(59, 39);
+            this._btnInvOpen.TabIndex = 8;
+            this._btnInvOpen.Text = "Open";
+            this._btnInvOpen.UseVisualStyleBackColor = true;
+            this._btnInvOpen.Click += new System.EventHandler(this.OnInvOpen);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Segoe UI", 14F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point);
+            this.label7.Location = new System.Drawing.Point(6, 100);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(100, 25);
+            this.label7.TabIndex = 7;
+            this.label7.Text = "Inventory";
+            // 
+            // _btnPickup
+            // 
+            this._btnPickup.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this._btnPickup.Location = new System.Drawing.Point(6, 53);
+            this._btnPickup.Name = "_btnPickup";
+            this._btnPickup.Size = new System.Drawing.Size(86, 44);
+            this._btnPickup.TabIndex = 6;
+            this._btnPickup.Text = "Pickup";
+            this._btnPickup.UseVisualStyleBackColor = true;
+            this._btnPickup.Click += new System.EventHandler(this.OnPickup);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 14F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point);
+            this.label5.Location = new System.Drawing.Point(6, 19);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(81, 25);
+            this.label5.TabIndex = 5;
+            this.label5.Text = "Interact";
             // 
             // label4
             // 
@@ -326,36 +433,14 @@ namespace JonaDaniel.AdventureGame.WinHost
             this._btnWest.UseVisualStyleBackColor = true;
             this._btnWest.Click += new System.EventHandler(this.OnMoveWest);
             // 
-            // groupBox1
+            // _lblTotalWeight
             // 
-            this.groupBox1.Controls.Add(this._btnPickup);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Location = new System.Drawing.Point(288, 0);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(177, 173);
-            this.groupBox1.TabIndex = 5;
-            this.groupBox1.TabStop = false;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 14F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point);
-            this.label5.Location = new System.Drawing.Point(6, 19);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(81, 25);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "Interact";
-            // 
-            // _btnPickup
-            // 
-            this._btnPickup.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this._btnPickup.Location = new System.Drawing.Point(6, 53);
-            this._btnPickup.Name = "_btnPickup";
-            this._btnPickup.Size = new System.Drawing.Size(86, 44);
-            this._btnPickup.TabIndex = 6;
-            this._btnPickup.Text = "Pickup";
-            this._btnPickup.UseVisualStyleBackColor = true;
-            this._btnPickup.Click += new System.EventHandler(this.OnPickup);
+            this._lblTotalWeight.AutoSize = true;
+            this._lblTotalWeight.Location = new System.Drawing.Point(181, 30);
+            this._lblTotalWeight.Name = "_lblTotalWeight";
+            this._lblTotalWeight.Size = new System.Drawing.Size(65, 15);
+            this._lblTotalWeight.TabIndex = 2;
+            this._lblTotalWeight.Text = "0.0 Pounds";
             // 
             // MainForm
             // 
@@ -373,10 +458,12 @@ namespace JonaDaniel.AdventureGame.WinHost
             this.tableLayoutPanel1.ResumeLayout(false);
             this._groupArea.ResumeLayout(false);
             this._groupArea.PerformLayout();
+            this._groupInventory.ResumeLayout(false);
+            this._groupInventory.PerformLayout();
             this._groupMove.ResumeLayout(false);
             this._groupMove.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this._groupInteract.ResumeLayout(false);
+            this._groupInteract.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -410,9 +497,16 @@ namespace JonaDaniel.AdventureGame.WinHost
         private System.Windows.Forms.Button _btnSouth;
         private System.Windows.Forms.Button _btnWest;
         private System.Windows.Forms.ToolStripMenuItem endToolStripMenuItem;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox _groupInteract;
         private System.Windows.Forms.Button _btnPickup;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.GroupBox _groupInventory;
+        private System.Windows.Forms.ListBox _listInventory;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button _btnInvClose;
+        private System.Windows.Forms.Button _btnInvOpen;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label _lblTotalWeight;
     }
 }
 

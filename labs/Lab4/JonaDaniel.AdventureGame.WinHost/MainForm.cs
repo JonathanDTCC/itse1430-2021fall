@@ -156,6 +156,13 @@ namespace JonaDaniel.AdventureGame.WinHost
 
             startToolStripMenuItem.Enabled = true;
             endToolStripMenuItem.Enabled = false;
+
+            _listInventory.DataSource = null;
+
+            _groupInventory.Visible = false;
+
+            _btnInvOpen.Enabled = true;
+            _btnInvClose.Enabled = false;
         }
 
 
@@ -231,7 +238,31 @@ namespace JonaDaniel.AdventureGame.WinHost
 
             _player.CurrentPosition.Item = null;
 
+            _lblTotalWeight.Text = $"Weight: {_player.Inventory.TotalWeight} Pounds";
+
+            var bindingSource = new BindingSource();
+
+            bindingSource.DataSource = _player.Inventory.GetAllItems();
+
+            _listInventory.DataSource = bindingSource;
+
             UpdateArea();
+        }
+
+        private void OnInvOpen ( object sender, EventArgs e )
+        {
+            _groupInventory.Visible = true;
+
+            _btnInvOpen.Enabled = false;
+            _btnInvClose.Enabled = true;
+        }
+
+        private void OnInvClose ( object sender, EventArgs e )
+        {            
+            _groupInventory.Visible = false;
+
+            _btnInvOpen.Enabled = true;
+            _btnInvClose.Enabled = false;
         }
     }
 }
