@@ -21,6 +21,10 @@ namespace Nile.Stores
             // Validate product
             ObjectValidator.Validate(product);
 
+            var existing = GetCore(product.Id);
+            if (existing != null)
+                throw new Exception("Product must be unique");
+
             //Emulate database by storing copy
             return AddCore(product);
         }
@@ -70,6 +74,10 @@ namespace Nile.Stores
             var existing = GetCore(product.Id);
             if (existing == null)
                 throw new Exception("Product not found");
+
+            var dup = GetCore(1); //product.Name
+            if (dup != null && dup.Id != product.Id)
+                throw new InvalidOperationException("Product must be unique");
 
             return UpdateCore(existing, product);
         }
