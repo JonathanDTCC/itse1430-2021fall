@@ -172,7 +172,12 @@ namespace Nile.Windows
             // Handle errors
             try
             {
-                _bsProducts.DataSource = _database.GetAll();
+                var products = _database.GetAll();
+                products = from p in products
+                           orderby p.Name
+                           select p;
+
+                _bsProducts.DataSource = products;
             } catch (Exception ex)
             {
                 DisplayError(ex.Message, "UpdateList Failed");
